@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cliente_id')->constrained('users')->cascadeOnDelete();
+            $table->string('direccion_envio');
+            $table->enum('estado', ['pendiente', 'procesando', 'enviado', 'entregado', 'cancelado'])->default('pendiente');
+            $table->enum('metodo_pago', ['tarjeta','transferencia','paypal'])->default('tarjeta');
+            $table->timestamp('fecha_pedido')->useCurrent();
             $table->timestamps();
         });
     }

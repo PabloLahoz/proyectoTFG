@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('tipo');
             $table->string('dimensiones');
             $table->decimal('precio');
+            $table->enum("estado", ['nuevo', 'seminuevo'])->default('nuevo');
+            $table->integer('cantidad');
             $table->string('imagen')->nullable();
         });
     }

@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('detalle_pedidos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pedido_id')->constrained('pedidos')->cascadeOnDelete();
+            $table->foreignId('producto_id')->constrained('productos')->cascadeOnDelete();
+            $table->integer('cantidad');
+            $table->float('precio_unitario');
             $table->timestamps();
         });
     }
