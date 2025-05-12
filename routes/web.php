@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -33,5 +34,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/clientes', [UserController::class, 'index'])->name('admin.clientes.index');
     Route::get('/admin/clientes/{id}', [UserController::class, 'showCliente'])->name('admin.clientes.show');
 });
+
+Route::resource('productos', ProductoController::class);
 
 require __DIR__.'/auth.php';

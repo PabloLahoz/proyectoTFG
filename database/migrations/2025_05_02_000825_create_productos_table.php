@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('proveedor_id')->constrained('proveedores')->cascadeOnDelete();
             $table->string('nombre');
-            $table->string('tipo');
+            $table->string('material');
             $table->string('dimensiones');
-            $table->decimal('precio');
             $table->enum("estado", ['nuevo', 'seminuevo'])->default('nuevo');
-            $table->integer('cantidad');
-            $table->string('imagen')->nullable();
+            $table->integer('cantidad')->default(0);
+            $table->float('precio_compra')->default(0);
+            $table->float('precio_venta')->default(0);
+            $table->boolean('activo')->default(true);
+            $table->timestamps();
         });
     }
 

@@ -22,7 +22,15 @@ class UpdateProductoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'proveedor_id'   => 'required|exists:proveedores,id',
+            'nombre'         => 'required|string|max:255',
+            'material'       => 'required|string|max:255',
+            'dimensiones'    => 'required|string|max:255',
+            'estado'         => 'required|in:nuevo,seminuevo',
+            'cantidad'       => 'required|integer|min:0',
+            'precio_compra'  => 'required|numeric|min:0',
+            'precio_venta'   => 'required|numeric|min:0',
+            'activo'         => 'boolean',
         ];
     }
 }

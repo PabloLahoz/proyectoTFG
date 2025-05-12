@@ -10,5 +10,20 @@ class Producto extends Model
     /** @use HasFactory<\Database\Factories\ProductoFactory> */
     use HasFactory;
 
-    protected $fillable = ['nombre','tipo','dimensiones','precio','imagen'];
+    protected $fillable = [
+        'proveedor_id',
+        'nombre',
+        'material',
+        'dimensiones',
+        'estado',
+        'cantidad',
+        'precio_compra',
+        'precio_venta',
+        'activo',
+    ];
+
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class);
+    }
 }
