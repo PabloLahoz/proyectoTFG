@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductoRequest;
 use App\Http\Requests\UpdateProductoRequest;
 use App\Models\Producto;
+use App\Models\Proveedor;
 
 class ProductoController extends Controller
 {
@@ -13,55 +14,54 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::all();
-        return view('producto.index', compact('productos'));
+        $productos = Producto::with('proveedor')->paginate(10); // Si quieres paginación
+        return view('productos.index', compact('productos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Mostrar el formulario para crear un nuevo producto
     public function create()
     {
-        //
+        $proveedores = Proveedor::all();
+        return view('productos.create', compact('proveedores'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Almacenar un nuevo producto
     public function store(StoreProductoRequest $request)
     {
-        //
+        Producto::create($request->validated());
+        return redirect()->route('productos.index')->with('success', 'Producto creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Mostrar los detalles de un producto
     public function show(Producto $producto)
     {
-        //
+        return view('admin.productos.show', compact('producto'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Mostrar el formulario para editar un producto
     public function edit(Producto $producto)
     {
-        //
+        $proveedores = Proveedor::all();
+        return view('admin.productos.edit', compact('producto', 'proveedores'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualizar un producto existente
     public function update(UpdateProductoRequest $request, Producto $producto)
     {
-        //
+        $producto->update($request->validated());
+        return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Eliminar un producto
     public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
+    }
+
+    public function estado($id, $estado) {
+        $item = Producto::find($id);
+        $item->activo = $estado;
+        return $item->save();
     }
 }

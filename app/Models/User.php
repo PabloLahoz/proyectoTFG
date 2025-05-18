@@ -50,11 +50,13 @@ class User extends Authenticatable
     }
 
     public function pedidos() {
-        return $this->hasMany(Pedido::class, 'id_usuario');
+        return $this->hasMany(Pedido::class);
     }
 
     public function esAdministrador()
     {
         return $this->rol === 'administrador';
     }
+
+
 }

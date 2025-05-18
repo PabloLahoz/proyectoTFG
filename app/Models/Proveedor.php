@@ -9,4 +9,6 @@ class Proveedor extends Model
 {
     /** @use HasFactory<\Database\Factories\ProveedorFactory> */
     use HasFactory;
+
+    protected $fillable = ['nombre','telefono','email','cp','notas'];
 }
