@@ -22,12 +22,11 @@ class Producto extends Model
         'activo',
     ];
 
-    public function proveedor()
-    {
-        return $this->belongsTo(Proveedor::class);
-    }
-
     public function detallesPedido() {
         return $this->hasMany(DetallePedido::class);
+    }
+
+    public function compras() {
+        return $this->hasMany(Compra::class);
     }
 }
