@@ -1,20 +1,67 @@
-<header class="md:h-15v bg-blue-500
-    flex flex-col md:flex-row justify-between px-3 items-center">
-    <img class="w-40 h-32 ml-1" src="{{asset("images/logo.jpg")}}" alt="logo">
-    <h1 class="text-5xl text-white text-">{{__("PALETS ÉPILA")}}</h1>
-    <div class="flex flex-col items-end space-y-2 mt-3">
-        @auth()
-            <span class="text-white">{{auth()->user()->name}}</span>
-            <form action="{{route("logout")}}" method="post">
-                @csrf
-                <input class="px-4 py-2 text-black bg-gray-300 rounded hover:bg-gray-200" type="submit" value="{{__("Log Out")}}">
-            </form>
-        @endauth
+<header class="bg-white shadow" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center space-x-2">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-10 w-10 object-contain">
+            <span class="text-xl font-bold text-gray-800">MiTienda</span>
+        </div>
 
-        @guest()
-            <a class="px-4 py-2 text-black bg-gray-300 rounded hover:bg-gray-200" href="{{route("login")}}">{{__("Log in")}}</a>
-            <a class="px-4 py-2 text-black bg-gray-300 rounded hover:bg-gray-200" href="{{route("register")}}">{{__("Registrarse")}}</a>
-        @endguest
-        <x-layouts.lang/>
+        <!-- Botón menú hamburguesa (solo visible en móviles) -->
+        <button @click="open = !open" class="md:hidden focus:outline-none">
+            <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Navegación principal (oculta en móviles) -->
+        <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+            <a href="{{ route('home') }}" class="hover:text-blue-600">Inicio</a>
+            <a href="{{ route('productos.index') }}" class="hover:text-blue-600">Productos</a>
+            <a href="{{ route('contacto') }}" class="hover:text-blue-600">Contacto</a>
+        </nav>
+
+        <!-- Buscador + iconos -->
+        <div class="hidden md:flex items-center space-x-4">
+            <!-- Campo de texto -->
+            <input type="text" placeholder="Buscar..." class="px-3 py-1 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <!-- Carrito -->
+            <a href="{{ route('carrito.index') }}" class="relative">
+                <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13l-1.5 7h13L17 13M6 21a1 1 0 100-2 1 1 0 000 2zm12 0a1 1 0 100-2 1 1 0 000 2z" />
+                </svg>
+            </a>
+
+            <!-- Usuario -->
+            <x-layouts.usuario-dropdown/>
+        </div>
+    </div>
+
+    <!-- Menú móvil -->
+    <div class="md:hidden" x-show="open" x-transition>
+        <nav class="px-4 pt-4 pb-4 space-y-2 text-gray-700">
+            <a href="{{ route('home') }}" class="block hover:text-blue-600">Inicio</a>
+            <a href="{{ route('productos.index') }}" class="block hover:text-blue-600">Productos</a>
+            <a href="{{ route('contacto') }}" class="block hover:text-blue-600">Contacto</a>
+
+            <!-- Buscador y botones móviles -->
+            <div class="mt-4 space-y-4">
+                <input type="text" placeholder="Buscar..." class="w-full px-3 py-1 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                <div class="flex space-x-6">
+                    <a href="{{ route('carrito.index') }}">
+                        <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13l-1.5 7h13L17 13M6 21a1 1 0 100-2 1 1 0 000 2zm12 0a1 1 0 100-2 1 1 0 000 2z" />
+                        </svg>
+                    </a>
+                    <a href="{{ route('perfil') }}">
+                        <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5.121 17.804A10 10 0 1118.879 6.196M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </nav>
     </div>
 </header>
