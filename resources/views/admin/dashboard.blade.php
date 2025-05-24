@@ -10,11 +10,11 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
                 <div class="bg-blue-600 text-white rounded-xl p-4 shadow">
                     <h3 class="text-sm uppercase mb-1">Total de ventas</h3>
-                    <p class="text-2xl font-bold">${{ number_format($totalVentas, 2) }}</p>
+                    <p class="text-2xl font-bold">${{ number_format($totalPedidos, 2) }}</p>
                 </div>
                 <div class="bg-green-600 text-white rounded-xl p-4 shadow">
                     <h3 class="text-sm uppercase mb-1">Cantidad de ventas</h3>
-                    <p class="text-2xl font-bold">{{ $cantidadVentas }}</p>
+                    <p class="text-2xl font-bold">{{ $cantidadPedidos }}</p>
                 </div>
                 <div class="bg-red-600 text-white rounded-xl p-4 shadow">
                     <h3 class="text-sm uppercase mb-1">Productos con bajo stock</h3>
@@ -24,11 +24,11 @@
 
             <h3 class="text-xl font-semibold text-gray-700 mb-3">Últimas Ventas</h3>
             <ul class="divide-y divide-gray-200">
-                @forelse ($ventasRecientes as $item)
+                @forelse ($pedidosRecientes as $item)
                     <li class="flex justify-between items-center py-2">
                         <span class="text-gray-700">Venta #{{ $item->id }}</span>
                         <span class="bg-gray-300 text-gray-800 text-sm px-3 py-1 rounded-full">
-              ${{ number_format($item->total_venta, 2) }}
+              ${{ number_format($item->total_pedido, 2) }}
             </span>
                     </li>
                 @empty
