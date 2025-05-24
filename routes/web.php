@@ -10,7 +10,7 @@ Route::get('/', function () {
 });
 
 Route::get('/', [\App\Http\Controllers\ProductoController::class, 'index']);
-
+Route::view("/","home")->name("home");
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
