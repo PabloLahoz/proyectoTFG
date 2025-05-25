@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,10 @@ Route::middleware(['auth',AdminMiddleware::class,])->get('/admin/dashboard', \Ap
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/clientes', [UserController::class, 'index'])->name('admin.clientes.index');
     Route::get('/admin/clientes/{id}', [UserController::class, 'showCliente'])->name('admin.clientes.show');
+});
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::resource('proveedores', ProveedorController::class);
 });
 
 Route::resource('productos', ProductoController::class);

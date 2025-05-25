@@ -13,24 +13,29 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        //
+        $proveedores = Proveedor::all();
+        return view('admin.proveedores.index', compact('proveedores'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('admin.proveedores.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreProveedorRequest $request)
     {
-        //
+        Proveedor::create($request->validated());
+        return redirect()->route('admin.proveedores.index')->with('success', 'Proveedor añadido correctamente.');
     }
+
 
     /**
      * Display the specified resource.
@@ -45,22 +50,24 @@ class ProveedorController extends Controller
      */
     public function edit(Proveedor $proveedor)
     {
-        //
+        return view('admin.proveedores.edit', compact('proveedor'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProveedorRequest $request, Proveedor $proveedor)
-    {
-        //
+    public function update(UpdateProveedorRequest $request, Proveedor $proveedor) {
+        $proveedor->update($request->validated());
+        return redirect()->route('admin.proveedores.index')->with('success', 'Proveedor actualizado correctamente.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Proveedor $proveedor)
-    {
-        //
+    public function destroy(Proveedor $proveedor) {
+        $proveedor->delete();
+        return redirect()->route('admin.proveedores.index')->with('success', 'Proveedor eliminado correctamente.');
     }
+
 }

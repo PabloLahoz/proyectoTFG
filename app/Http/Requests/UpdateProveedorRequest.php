@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProveedorRequest extends FormRequest
 {
@@ -22,7 +23,23 @@ class UpdateProveedorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('proveedores')->ignore($this->proveedor->id),
+            ],
+            'telefono' => [
+                'nullable',
+                'string',
+                'max:20',
+                Rule::unique('proveedores')->ignore($this->proveedor->id),
+            ],
+            'cp' => 'required|string',
+            'notas' => 'max:500',
         ];
+
     }
+
 }

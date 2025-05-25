@@ -22,7 +22,12 @@ class StoreProveedorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => 'required|string|max:50',
+            'telefono' => 'required|string|unique|min:9|max:9',
+            'email' => 'required|email|unique',
+            'cp' => 'required|string',
+            'notas' => 'max:500',
         ];
     }
+
 }
