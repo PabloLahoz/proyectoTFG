@@ -1,4 +1,4 @@
-<header class="bg-white shadow" x-data="{ open: false }">
+<header class="bg-[#2F855A] shadow" x-data="{ open: false }">
     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center space-x-2">
@@ -17,7 +17,7 @@
         <!-- Navegación principal (oculta en móviles) -->
         <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
             <a href="{{ route('home') }}" class="hover:text-blue-600">Inicio</a>
-            <a href="{{ route('productos.index') }}" class="hover:text-blue-600">Productos</a>
+            <a href="" class="hover:text-blue-600">Productos</a>
             <a href="{{ route('contacto') }}" class="hover:text-blue-600">Contacto</a>
         </nav>
 
@@ -27,7 +27,7 @@
             <input type="text" placeholder="Buscar..." class="px-3 py-1 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
 
             <!-- Carrito -->
-            <a href="{{ route('carrito.index') }}" class="relative">
+            <a href="" class="relative">
                 <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13l-1.5 7h13L17 13M6 21a1 1 0 100-2 1 1 0 000 2zm12 0a1 1 0 100-2 1 1 0 000 2z" />
                 </svg>
@@ -42,7 +42,7 @@
     <div class="md:hidden" x-show="open" x-transition>
         <nav class="px-4 pt-4 pb-4 space-y-2 text-gray-700">
             <a href="{{ route('home') }}" class="block hover:text-blue-600">Inicio</a>
-            <a href="{{ route('productos.index') }}" class="block hover:text-blue-600">Productos</a>
+            <a href="" class="block hover:text-blue-600">Productos</a>
             <a href="{{ route('contacto') }}" class="block hover:text-blue-600">Contacto</a>
 
             <!-- Buscador y botones móviles -->
@@ -50,12 +50,12 @@
                 <input type="text" placeholder="Buscar..." class="w-full px-3 py-1 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
 
                 <div class="flex space-x-6">
-                    <a href="{{ route('carrito.index') }}">
+                    <a href="">
                         <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13l-1.5 7h13L17 13M6 21a1 1 0 100-2 1 1 0 000 2zm12 0a1 1 0 100-2 1 1 0 000 2z" />
                         </svg>
                     </a>
-                    <a href="{{ route('perfil') }}">
+                    <a href="">
                         <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M5.121 17.804A10 10 0 1118.879 6.196M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -10,8 +11,7 @@
 </head>
 <body class="flex flex-col min-h-screen">
 <x-layouts.header/>
-<x-layouts.nav/>
-<main class="bg-white flex-grow p-4">
+<main class="bg-[#F7FAF7] flex-grow p-4">
     {{$slot}}
 </main>
 <x-layouts.footer/>

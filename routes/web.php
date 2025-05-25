@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CompraController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProveedorController;
@@ -10,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::view("/contacto","contacto")->name("contacto");
 Route::get('/', [\App\Http\Controllers\ProductoController::class, 'index']);
 Route::view("/", "home")->name("home");
 Route::get('/dashboard', function () {
@@ -31,7 +33,9 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/cuenta/cerrar', [UserController::class, 'cerrarCuenta'])->name('cuenta.cerrar');
 });
 
-Route::middleware(['auth',AdminMiddleware::class,])->get('/admin/dashboard', \App\Http\Controllers\DashboardController::class)->name('admin.dashboard');
+Route::middleware(['auth', AdminMiddleware::class])
+    ->get('/admin/dashboard', [DashboardController::class, 'index'])
+    ->name('admin.dashboard');
 
 
 // Rutas para ADMIN
@@ -42,6 +46,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::resource('proveedores', ProveedorController::class);
+});
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::resource('compras', CompraController::class);
 });
 
 Route::resource('productos', ProductoController::class);
