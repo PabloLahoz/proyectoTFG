@@ -11,13 +11,12 @@ class Producto extends Model
     use HasFactory;
 
     protected $fillable = [
-        'proveedor_id',
         'nombre',
         'material',
         'dimensiones',
         'estado',
         'cantidad',
-        'precio_compra',
+        'precio_ultima_compra',
         'precio_venta',
         'activo',
     ];
@@ -28,5 +27,9 @@ class Producto extends Model
 
     public function compras() {
         return $this->hasMany(Compra::class);
+    }
+
+    public function proveedores() {
+        return $this->belongsToMany(Proveedor::class, 'compras');
     }
 }

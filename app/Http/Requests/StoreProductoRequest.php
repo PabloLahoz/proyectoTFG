@@ -11,7 +11,7 @@ class StoreProductoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,7 +28,7 @@ class StoreProductoRequest extends FormRequest
             'dimensiones'    => 'required|string|max:255',
             'estado'         => 'required|in:nuevo,seminuevo',
             'cantidad'       => 'required|integer|min:0',
-            'precio_compra'  => 'required|numeric|min:0',
+            'precio_ultima_compra'  => 'required|numeric|min:0',
             'precio_venta'   => 'required|numeric|min:0',
             'activo'         => 'boolean',
         ];
