@@ -15,6 +15,7 @@ Route::get('/', function () {
 Route::view("/contacto","contacto")->name("contacto");
 Route::get('/', [\App\Http\Controllers\ProductoController::class, 'index']);
 Route::view("/", "home")->name("home");
+Route::view('/catalogo', "catalogo")->name("catalogo");
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
