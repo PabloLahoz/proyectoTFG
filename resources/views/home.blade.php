@@ -1,6 +1,6 @@
 <x-layouts.layout>
     <!-- Hero principal -->
-    <section class="bg-cover bg-center h-[80vh] flex items-center justify-center text-white" style="background-image: url('/images/palets-hero.jpg');">
+    <section class="bg-cover bg-center h-[80vh] flex items-center justify-center text-white" style="background-image: url('/img/imagenInicio.jpg');">
         <div class="bg-black/60 p-8 rounded-xl text-center max-w-2xl">
             <h1 class="text-4xl font-bold mb-4">Tu proveedor de palets de confianza desde 1983</h1>
             <p class="text-lg mb-6">Consulta nuestro catálogo de palets y realiza pedidos de forma rápida y sencilla.</p>
@@ -44,7 +44,7 @@
         <div class="max-w-7xl mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold mb-10">Productos destacados</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                @foreach ($productos as $producto)
+                @forelse ($productos as $producto)
                     <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
                         <img src="{{ asset('storage/' . $producto->imagen) }}" alt="{{ $producto->nombre }}" class="h-40 object-cover w-full mb-4 rounded">
                         <h3 class="text-xl font-semibold">{{ $producto->nombre }}</h3>
@@ -52,7 +52,9 @@
                         <p class="text-lg font-bold text-yellow-600">{{ number_format($producto->precio_venta, 2) }} €</p>
                         <a href="{{ route('productos') }}" class="text-yellow-600 mt-4 inline-block hover:underline">Ver más</a>
                     </div>
-                @endforeach
+                @empty
+                    <p class="text-gray-500 text-center col-span-3">Actualmente no hay productos disponibles en el catálogo.</p>
+                @endforelse
             </div>
         </div>
     </section>

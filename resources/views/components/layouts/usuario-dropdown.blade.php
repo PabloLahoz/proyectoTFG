@@ -2,9 +2,10 @@
 <div class="relative" x-data="{ open: false }">
     <!-- Icono de usuario -->
     <button @click="open = !open" class="focus:outline-none">
-        <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M5.121 17.804A10 10 0 1118.879 6.196M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 -3 24 24">
+            <path d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
         </svg>
+
     </button>
 
     <!-- Dropdown -->

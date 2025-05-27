@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProveedorController;
@@ -15,6 +16,7 @@ Route::get('/', function () {
 Route::view("/contacto","contacto")->name("contacto");
 Route::get('/', [\App\Http\Controllers\ProductoController::class, 'index']);
 Route::view("/", "home")->name("home");
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::view('/catalogo', "catalogo")->name("catalogo");
 Route::get('/dashboard', function () {
     return view('dashboard');

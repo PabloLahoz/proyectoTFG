@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center space-x-2">
-            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-10 w-10 object-contain">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="object-contain w-28 h-28">
             <span class="text-xl font-bold text-gray-800">MiTienda</span>
         </div>
 
@@ -29,7 +29,7 @@
             <!-- Carrito -->
             <a href="" class="relative">
                 <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13l-1.5 7h13L17 13M6 21a1 1 0 100-2 1 1 0 000 2zm12 0a1 1 0 100-2 1 1 0 000 2z" />
+                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
             </a>
 

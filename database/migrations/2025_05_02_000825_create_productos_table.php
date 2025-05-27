@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('material');
             $table->string('dimensiones');
-            $table->enum("estado", ['nuevo', 'seminuevo'])->default('nuevo');
+            $table->enum("estado", ['nuevo', 'seminuevo'])->default('seminuevo');
             $table->integer('cantidad')->default(0);
             $table->float('precio_ultima_compra')->default(0);
             $table->float('precio_venta')->default(0);
