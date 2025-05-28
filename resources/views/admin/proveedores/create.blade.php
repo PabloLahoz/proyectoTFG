@@ -1,3 +1,6 @@
+<x-layouts.layout>
+
+
 <div class="mb-8">
     <h1 class="text-3xl font-bold text-gray-800">Agregar proveedor</h1>
 </div>
@@ -56,3 +59,4 @@
         </div>
     </form>
 </section>
+</x-layouts.layout>

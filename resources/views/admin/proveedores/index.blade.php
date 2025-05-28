@@ -7,7 +7,7 @@
             <p class="text-gray-500 mb-4">Administrar los proveedores de nuestros productos.</p>
 
             <div class="mb-4">
-                <a href="{{ route('proveedores.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition">
+                <a href="{{ route('admin.proveedores.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition">
                     <i class="fa-solid fa-circle-plus mr-2"></i> Agregar nuevo proveedor
                 </a>
             </div>

@@ -5,10 +5,10 @@
 
     <section class="bg-white p-6 rounded-xl shadow-md">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">
-            Compra nueva de: <span class="text-indigo-600 font-bold">{{ $item->nombre }}</span>
+            Nueva compra
         </h2>
 
-        <form action="{{ route('compras.store') }}" method="POST" class="space-y-4">
+        <form action="{{ route('admin.compras.store') }}" method="POST" class="space-y-4">
             @csrf
             <input type="hidden" value="{{ $item->id }}" id="id" name="id">
 

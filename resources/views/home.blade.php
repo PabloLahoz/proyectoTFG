@@ -50,7 +50,7 @@
                         <h3 class="text-xl font-semibold">{{ $producto->nombre }}</h3>
                         <p class="text-sm text-gray-500 mb-2">{{ $producto->material }} - {{ $producto->dimensiones }}</p>
                         <p class="text-lg font-bold text-yellow-600">{{ number_format($producto->precio_venta, 2) }} €</p>
-                        <a href="{{ route('productos') }}" class="text-yellow-600 mt-4 inline-block hover:underline">Ver más</a>
+                        <a href="" class="text-yellow-600 mt-4 inline-block hover:underline">Ver más</a>
                     </div>
                 @empty
                     <p class="text-gray-500 text-center col-span-3">Actualmente no hay productos disponibles en el catálogo.</p>

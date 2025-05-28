@@ -10,9 +10,17 @@
 </head>
 <body class="flex flex-col min-h-screen">
 <x-layouts.header/>
-<main class="bg-[#F7FAF7] flex-1">
-    {{$slot}}
-</main>
+<div class="flex flex-1">
+    @auth
+        @if(auth()->user()->rol === 'administrador')
+            <x-layouts.aside />
+        @endif
+    @endauth
+
+    <main class="flex-1 bg-[#F7FAF7]">
+        {{ $slot }}
+    </main>
+</div>
 <x-layouts.footer/>
 </body>
 </html>

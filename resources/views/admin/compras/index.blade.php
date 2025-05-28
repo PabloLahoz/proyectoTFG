@@ -6,6 +6,10 @@
     <section class="bg-white p-6 rounded-xl shadow-md">
         <h2 class="text-xl font-semibold text-gray-700 mb-2">Administrar compras</h2>
         <p class="text-gray-500 mb-4">Administrar la compra de productos.</p>
+        <a href="{{ route('admin.compras.create') }}"
+           class="bg-blue-600 text-white px-4 py-2 mb-4 rounded hover:bg-blue-700 transition">
+            + Nueva compra
+        </a>
 
         <div class="overflow-x-auto">
             <table class="min-w-full table-auto border-collapse border border-gray-300">

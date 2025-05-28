@@ -3,7 +3,7 @@
         <div class="bg-white shadow-xl rounded-2xl p-6">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-2xl font-semibold text-gray-800">Listado de productos</h2>
-                <a href="{{ route('productos.create') }}"
+                <a href="{{ route('admin.productos.create') }}"
                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                     + Nuevo producto
                 </a>
@@ -40,11 +40,9 @@
                             <td class="px-4 py-2">€ {{ number_format($producto->precio_venta, 2) }}</td>
                             <td class="px-4 py-2">{{ $producto->proveedor->nombre ?? 'Sin proveedor' }}</td>
                             <td class="px-4 py-2 text-center space-x-2">
-                                <a href="{{ route('productos.show', $producto) }}"
-                                   class="text-blue-600 hover:underline">Ver</a>
-                                <a href="{{ route('productos.edit', $producto) }}"
+                                <a href="{{ route('admin.productos.edit', $producto) }}"
                                    class="text-yellow-600 hover:underline">Editar</a>
-                                <form action="{{ route('productos.destroy', $producto) }}"
+                                <form action="{{ route('admin.productos.destroy', $producto) }}"
                                       method="POST"
                                       class="inline-block"
                                       onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
@@ -63,9 +61,7 @@
                 </table>
             </div>
 
-            <div class="mt-4">
-                {{ $productos->links() }}
-            </div>
+
         </div>
     </div>
 </x-layouts.layout>

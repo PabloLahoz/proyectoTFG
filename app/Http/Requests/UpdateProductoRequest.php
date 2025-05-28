@@ -22,7 +22,6 @@ class UpdateProductoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'proveedor_id'   => 'required|exists:proveedores,id',
             'nombre'         => 'required|string|max:255',
             'material'       => 'required|string|max:255',
             'dimensiones'    => 'required|string|max:255',

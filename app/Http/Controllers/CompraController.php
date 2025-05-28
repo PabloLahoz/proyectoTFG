@@ -15,8 +15,8 @@ class CompraController extends Controller
      */
     public function index()
     {
-        $compras = Compra::with('producto', 'proveedor')->latest()->get();
-        return view('admin.compras.index', compact('compras'));
+        $items = Compra::with('producto', 'proveedor')->latest()->get();
+        return view('admin.compras.index', compact('items'));
     }
 
     /**

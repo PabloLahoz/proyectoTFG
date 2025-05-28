@@ -42,47 +42,10 @@
                             <option value="seminuevo" {{ old('estado') === 'seminuevo' ? 'selected' : '' }}>Seminuevo</option>
                         </select>
                     </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Cantidad</label>
-                        <input type="number" name="cantidad" value="{{ old('cantidad', 0) }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Precio de compra (€)</label>
-                        <input type="number" step="0.01" name="precio_compra" value="{{ old('precio_compra', 0) }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Precio de venta (€)</label>
-                        <input type="number" step="0.01" name="precio_venta" value="{{ old('precio_venta', 0) }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Proveedor</label>
-                        <select name="proveedor_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                            <option value="">Selecciona un proveedor</option>
-                            @foreach($proveedores as $proveedor)
-                                <option value="{{ $proveedor->id }}"
-                                    {{ old('proveedor_id') == $proveedor->id ? 'selected' : '' }}>
-                                    {{ $proveedor->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="flex items-center">
-                        <input type="checkbox" name="activo" id="activo" class="h-4 w-4 text-blue-600 border-gray-300"
-                            {{ old('activo', true) ? 'checked' : '' }}>
-                        <label for="activo" class="ml-2 text-sm text-gray-700">Producto activo</label>
-                    </div>
                 </div>
 
                 <div class="pt-6 flex justify-end gap-4">
-                    <a href="{{ route('productos.index') }}"
+                    <a href="{{ route('admin.productos.index') }}"
                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">
                         Cancelar
                     </a>

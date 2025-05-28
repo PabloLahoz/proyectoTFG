@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('direccion_envio');
             $table->enum('estado', ['pendiente', 'procesando', 'enviado', 'entregado', 'cancelado'])->default('pendiente');
             $table->enum('metodo_pago', ['tarjeta','transferencia','paypal'])->default('tarjeta');
+            $table->float('total_pedido');
             $table->timestamp('fecha_pedido')->useCurrent();
             $table->timestamps();
         });

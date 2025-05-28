@@ -13,8 +13,8 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        $proveedores = Proveedor::all();
-        return view('admin.proveedores.index', compact('proveedores'));
+        $items = Proveedor::all();
+        return view('admin.proveedores.index', compact('items'));
     }
 
 

@@ -14,15 +14,14 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::with('proveedor')->paginate(10); // Si quieres paginación
-        return view('productos.index', compact('productos'));
+        $productos = Producto::all();
+        return view('admin.productos.index', compact('productos'));
     }
 
     // Mostrar el formulario para crear un nuevo producto
     public function create()
     {
-        $proveedores = Proveedor::all();
-        return view('productos.create', compact('proveedores'));
+        return view('admin.productos.create');
     }
 
     // Almacenar un nuevo producto
