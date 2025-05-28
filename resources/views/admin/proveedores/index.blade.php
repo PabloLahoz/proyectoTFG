@@ -16,11 +16,11 @@
                 <table class="min-w-full table-auto text-sm text-center border border-gray-200">
                     <thead class="bg-gray-100 text-gray-700">
                     <tr>
+                        <th class="px-4 py-2 border">ID</th>
                         <th class="px-4 py-2 border">Nombre</th>
                         <th class="px-4 py-2 border">Teléfono</th>
                         <th class="px-4 py-2 border">Email</th>
-                        <th class="px-4 py-2 border">CP</th>
-                        <th class="px-4 py-2 border">Sitio Web</th>
+                        <th class="px-4 py-2 border">Dirección</th>
                         <th class="px-4 py-2 border">Nota</th>
                         <th class="px-4 py-2 border">Acciones</th>
                     </tr>
@@ -28,17 +28,17 @@
                     <tbody class="divide-y divide-gray-100">
                     @foreach ($items as $item)
                         <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2">{{ $item->id }}</td>
                             <td class="px-4 py-2">{{ $item->nombre }}</td>
                             <td class="px-4 py-2">{{ $item->telefono }}</td>
                             <td class="px-4 py-2">{{ $item->email }}</td>
-                            <td class="px-4 py-2">{{ $item->cp }}</td>
-                            <td class="px-4 py-2">{{ $item->sitio_web }}</td>
+                            <td class="px-4 py-2">{{ $item->direccion }}</td>
                             <td class="px-4 py-2">{{ $item->notas }}</td>
                             <td class="px-4 py-2 flex justify-center space-x-2">
-                                <a href="{{ route('proveedores.edit', $item->id) }}" class="text-yellow-500 hover:text-yellow-600">
+                                <a href="{{ route('admin.proveedores.edit', $item->id) }}" class="text-yellow-500 hover:text-yellow-600">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="{{ route('proveedores.show', $item->id) }}" class="text-red-600 hover:text-red-700">
+                                <a href="{{ route('admin.proveedores.show', $item->id) }}" class="text-red-600 hover:text-red-700">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
                             </td>

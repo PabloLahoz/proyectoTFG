@@ -51,6 +51,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::resource('clientes', ClienteController::class);
+});
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::resource('pedidos', PedidoController::class);
 });
 

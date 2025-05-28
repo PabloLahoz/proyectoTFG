@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('cantidad')->default(0);
             $table->float('precio_ultima_compra')->default(0);
             $table->float('precio_venta')->default(0);
-            $table->boolean('activo')->default(true);
+            $table->boolean('activo')->default(false);
             $table->timestamps();
         });
     }

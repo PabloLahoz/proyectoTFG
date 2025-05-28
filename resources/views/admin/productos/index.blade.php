@@ -25,7 +25,7 @@
                         <th class="px-4 py-2">Estado</th>
                         <th class="px-4 py-2">Cantidad</th>
                         <th class="px-4 py-2">Precio Venta</th>
-                        <th class="px-4 py-2">Proveedor</th>
+                        <th class="px-4 py-2">Precio Última Compra</th>
                         <th class="px-4 py-2 text-center">Acciones</th>
                     </tr>
                     </thead>
@@ -38,7 +38,7 @@
                             <td class="px-4 py-2 capitalize">{{ $producto->estado }}</td>
                             <td class="px-4 py-2">{{ $producto->cantidad }}</td>
                             <td class="px-4 py-2">€ {{ number_format($producto->precio_venta, 2) }}</td>
-                            <td class="px-4 py-2">{{ $producto->proveedor->nombre ?? 'Sin proveedor' }}</td>
+                            <td class="px-4 py-2">€ {{ number_format($producto->precio_ultima_compra, 2) }}</td>
                             <td class="px-4 py-2 text-center space-x-2">
                                 <a href="{{ route('admin.productos.edit', $producto) }}"
                                    class="text-yellow-600 hover:underline">Editar</a>

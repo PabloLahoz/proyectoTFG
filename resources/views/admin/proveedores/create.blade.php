@@ -30,14 +30,8 @@
         </div>
 
         <div>
-            <label for="cp" class="block font-medium text-gray-700">CP</label>
-            <input type="text" name="cp" id="cp" required
-                   class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200">
-        </div>
-
-        <div>
-            <label for="sitio_web" class="block font-medium text-gray-700">Sitio Web</label>
-            <input type="text" name="sitio_web" id="sitio_web" required
+            <label for="direccion" class="block font-medium text-gray-700">Dirección</label>
+            <input type="text" name="direccion" id="direccion" required
                    class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200">
         </div>
 

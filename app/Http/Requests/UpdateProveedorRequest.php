@@ -36,7 +36,7 @@ class UpdateProveedorRequest extends FormRequest
                 'max:20',
                 Rule::unique('proveedores')->ignore($this->proveedor->id),
             ],
-            'cp' => 'required|string',
+            'direccion' => 'required|string',
             'notas' => 'max:500',
         ];
 

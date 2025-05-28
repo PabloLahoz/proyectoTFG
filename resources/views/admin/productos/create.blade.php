@@ -13,7 +13,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('productos.store') }}" method="POST" class="space-y-4">
+            <form action="{{ route('admin.productos.store') }}" method="POST" class="space-y-4">
                 @csrf
 
                 <div class="grid md:grid-cols-2 gap-4">

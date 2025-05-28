@@ -27,8 +27,14 @@ class ProductoController extends Controller
     // Almacenar un nuevo producto
     public function store(StoreProductoRequest $request)
     {
-        Producto::create($request->validated());
-        return redirect()->route('productos.index')->with('success', 'Producto creado correctamente.');
+        $datos = $request->validated();
+
+        $datos['cantidad'] = 0;
+        $datos['activo'] = false;
+
+        Producto::create($datos);
+
+        return redirect()->route('admin.productos.index')->with('success', 'Producto creado correctamente.');
     }
 
     // Mostrar los detalles de un producto
@@ -54,8 +60,12 @@ class ProductoController extends Controller
     // Eliminar un producto
     public function destroy(Producto $producto)
     {
+        if ($producto->compras()->exists() && $producto->activo) {
+            return redirect()->back()->with('error', 'No se puede eliminar un producto activo con compras registradas.');
+        }
+
         $producto->delete();
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
+        return redirect()->route('admin.productos.index')->with('success', 'Producto eliminado correctamente.');
     }
 
     public function estado($id, $estado) {

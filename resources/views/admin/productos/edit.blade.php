@@ -51,12 +51,6 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Precio de compra (€)</label>
-                        <input type="number" step="0.01" name="precio_compra" value="{{ old('precio_compra', $producto->precio_compra) }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    </div>
-
-                    <div>
                         <label class="block text-sm font-medium text-gray-700">Precio de venta (€)</label>
                         <input type="number" step="0.01" name="precio_venta" value="{{ old('precio_venta', $producto->precio_venta) }}"
                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">

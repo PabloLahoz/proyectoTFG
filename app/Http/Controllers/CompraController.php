@@ -34,14 +34,27 @@ class CompraController extends Controller
      */
     public function store(StoreCompraRequest $request)
     {
-        $datos = $request->validated();
-        $compra = new Compra($datos);
+        $datos = $request->validated(); // ✔️ Aquí validas y usas los datos directamente
+
+        $producto = Producto::findOrFail($datos['producto_id']);
+        $proveedor = Proveedor::findOrFail($datos['proveedor_id']);
+
+        $compra = new Compra([
+            ...$datos, // Esto incluye cantidad, precio_compra, etc.
+            'nombre_producto' => $producto->nombre,
+            'nombre_proveedor' => $proveedor->nombre,
+        ]);
+
         if ($compra->save()) {
-            $producto = Producto::find($request->producto_id);
-            $producto->cantidad += $request->cantidad;
-            $producto->precio_ultima_compra = $request->precio_compra;
+            $producto->cantidad += $datos['cantidad'];
+            $producto->precio_ultima_compra = $datos['precio_compra'];
+            // Reactivar el producto si estaba desactivado
+            if (!$producto->activo && $producto->cantidad > 0) {
+                $producto->activo = true;
+            }
             $producto->save();
         }
+
         return redirect()->route('admin.productos.index')->with('success', 'Compra registrada correctamente');
     }
 
@@ -74,7 +87,28 @@ class CompraController extends Controller
      */
     public function destroy(Compra $compra)
     {
+        // Buscar el producto relacionado
+        $producto = Producto::find($compra->producto_id);
+
+        if ($producto) {
+            // Restar la cantidad de la compra
+            $producto->cantidad -= $compra->cantidad;
+
+            // Asegurarse de que la cantidad no sea negativa
+            if ($producto->cantidad < 0) {
+                $producto->cantidad = 0;
+            }
+
+            if ($producto->cantidad === 0) {
+                $producto->activo = false;
+            }
+
+            $producto->save();
+        }
+
+        // Eliminar la compra
         $compra->delete();
-        return redirect()->route('admin.compras.index')->with('status', 'Compra eliminada');
+
+        return redirect()->route('admin.compras.index')->with('status', 'Compra eliminada y cantidad ajustada');
     }
 }

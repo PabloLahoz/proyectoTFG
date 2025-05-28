@@ -10,7 +10,30 @@
 
         <form action="{{ route('admin.compras.store') }}" method="POST" class="space-y-4">
             @csrf
-            <input type="hidden" value="{{ $item->id }}" id="id" name="id">
+
+            {{-- Lista desplegable de productos --}}
+            <div>
+                <label for="producto_id" class="block text-sm font-medium text-gray-700">Producto</label>
+                <select name="producto_id" id="producto_id" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <option value="">Seleccione un producto</option>
+                    @foreach($productos as $producto)
+                        <option value="{{ $producto->id }}">{{ $producto->id }} - {{ $producto->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Lista desplegable de proveedores --}}
+            <div>
+                <label for="proveedor_id" class="block text-sm font-medium text-gray-700">Proveedor</label>
+                <select name="proveedor_id" id="proveedor_id" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <option value="">Seleccione un proveedor</option>
+                    @foreach($proveedores as $proveedor)
+                        <option value="{{ $proveedor->id }}">{{ $proveedor->id }} - {{ $proveedor->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <div>
                 <label for="cantidad" class="block text-sm font-medium text-gray-700">Cantidad del producto</label>
@@ -29,7 +52,7 @@
                         class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow">
                     Comprar
                 </button>
-                <a href="{{ route('productos') }}"
+                <a href="{{ route('admin.compras.index') }}"
                    class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-md shadow">
                     Cancelar
                 </a>
