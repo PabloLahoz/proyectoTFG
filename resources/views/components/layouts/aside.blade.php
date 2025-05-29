@@ -37,7 +37,7 @@
         </li>
 
         <li>
-            <a href="">
+            <a href="{{route('admin.clientes.index')}}">
                 <i class="fa-solid fa-users mr-2"></i>
                 Usuarios
             </a>

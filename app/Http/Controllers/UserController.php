@@ -54,7 +54,7 @@ class UserController extends Controller
     public function index()
     {
         $clientes = User::where('rol', 'cliente')->get();
-        return view('admin.usuarios.index', compact('clientes'));
+        return view('admin.clientes.index', compact('clientes'));
     }
 
     // Admin: ver un cliente específico

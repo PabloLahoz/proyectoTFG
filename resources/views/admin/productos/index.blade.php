@@ -26,6 +26,7 @@
                         <th class="px-4 py-2">Cantidad</th>
                         <th class="px-4 py-2">Precio Venta</th>
                         <th class="px-4 py-2">Precio Última Compra</th>
+                        <th class="px-4 py-2">Disponibilidad</th>
                         <th class="px-4 py-2 text-center">Acciones</th>
                     </tr>
                     </thead>
@@ -39,6 +40,13 @@
                             <td class="px-4 py-2">{{ $producto->cantidad }}</td>
                             <td class="px-4 py-2">€ {{ number_format($producto->precio_venta, 2) }}</td>
                             <td class="px-4 py-2">€ {{ number_format($producto->precio_ultima_compra, 2) }}</td>
+                            <td class="px-4 py-2">
+                                @if($producto->activo)
+                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">Disponible</span>
+                                @else
+                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-red-700 bg-red-100 rounded-full">No disponible</span>
+                                @endif
+                            </td>
                             <td class="px-4 py-2 text-center space-x-2">
                                 <a href="{{ route('admin.productos.edit', $producto) }}"
                                    class="text-yellow-600 hover:underline">Editar</a>
