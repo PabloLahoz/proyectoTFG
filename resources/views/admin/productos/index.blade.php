@@ -24,6 +24,7 @@
                         <th class="px-4 py-2">Dimensiones</th>
                         <th class="px-4 py-2">Estado</th>
                         <th class="px-4 py-2">Cantidad</th>
+                        <th class="px-4 py-2">Imagen</th>
                         <th class="px-4 py-2">Precio Venta</th>
                         <th class="px-4 py-2">Precio Última Compra</th>
                         <th class="px-4 py-2">Disponibilidad</th>
@@ -38,6 +39,7 @@
                             <td class="px-4 py-2">{{ $producto->dimensiones }}</td>
                             <td class="px-4 py-2 capitalize">{{ $producto->estado }}</td>
                             <td class="px-4 py-2">{{ $producto->cantidad }}</td>
+                            <td class="px-4 py-2"><img src="{{ asset('storage/' . $producto->imagen->ruta) }}" alt="" width="60px" height="60px"></td>
                             <td class="px-4 py-2">€ {{ number_format($producto->precio_venta, 2) }}</td>
                             <td class="px-4 py-2">€ {{ number_format($producto->precio_ultima_compra, 2) }}</td>
                             <td class="px-4 py-2">

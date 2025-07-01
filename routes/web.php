@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientePedidoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -21,6 +22,8 @@ Route::get('/', [\App\Http\Controllers\ProductoController::class, 'index']);
 Route::view("/", "home")->middleware(NoAdminAccess::class)->name("home");
 Route::get('/', [HomeController::class, 'index'])->middleware(NoAdminAccess::class)->name("home");
 Route::view('/catalogo', "catalogo")->middleware(NoAdminAccess::class)->name("catalogo");
+Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('catalogo');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -69,6 +72,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::cla
 Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::resource('compras', CompraController::class);
 });
+
+Route::middleware(['auth'])->prefix('cliente')->name('cliente.')->group(function () {
+    Route::get('mispedidos', [ClientePedidoController::class, 'index'])->name('pedidos.index');
+    Route::get('mispedidos/{pedido}', [ClientePedidoController::class, 'show'])->name('pedidos.show');
+});
+
 
 Route::resource('productos', ProductoController::class);
 

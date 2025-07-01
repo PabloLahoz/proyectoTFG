@@ -17,7 +17,7 @@
         <!-- Navegación principal (oculta en móviles) -->
         <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
             <a href="{{ route('home') }}" class="hover:text-blue-600">Inicio</a>
-            <a href="" class="hover:text-blue-600">Productos</a>
+            <a href="{{route('catalogo')}}" class="hover:text-blue-600">Productos</a>
             <a href="{{ route('contacto') }}" class="hover:text-blue-600">Contacto</a>
         </nav>
 

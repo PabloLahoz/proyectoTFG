@@ -46,7 +46,7 @@
             <div class="grid md:grid-cols-3 gap-8">
                 @forelse ($productos as $producto)
                     <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-                        <img src="{{ asset('storage/' . $producto->imagen) }}" alt="{{ $producto->nombre }}" class="h-40 object-cover w-full mb-4 rounded">
+                        <img src="{{ asset('storage/' . $producto->imagen->ruta) }}" alt="{{ $producto->nombre }}" class="h-40 object-cover w-full mb-4 rounded">
                         <h3 class="text-xl font-semibold">{{ $producto->nombre }}</h3>
                         <p class="text-sm text-gray-500 mb-2">{{ $producto->material }} - {{ $producto->dimensiones }}</p>
                         <p class="text-lg font-bold text-yellow-600">{{ number_format($producto->precio_venta, 2) }} €</p>

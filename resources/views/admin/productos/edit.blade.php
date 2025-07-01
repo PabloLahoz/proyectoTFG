@@ -45,34 +45,9 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Cantidad</label>
-                        <input type="number" name="cantidad" value="{{ old('cantidad', $producto->cantidad) }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    </div>
-
-                    <div>
                         <label class="block text-sm font-medium text-gray-700">Precio de venta (€)</label>
                         <input type="number" step="0.01" name="precio_venta" value="{{ old('precio_venta', $producto->precio_venta) }}"
                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Proveedor</label>
-                        <select name="proveedor_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                            <option value="">Selecciona un proveedor</option>
-                            @foreach($proveedores as $proveedor)
-                                <option value="{{ $proveedor->id }}"
-                                    {{ old('proveedor_id', $producto->proveedor_id) == $proveedor->id ? 'selected' : '' }}>
-                                    {{ $proveedor->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="flex items-center">
-                        <input type="checkbox" name="activo" id="activo" class="h-4 w-4 text-blue-600 border-gray-300"
-                            {{ old('activo', $producto->activo) ? 'checked' : '' }}>
-                        <label for="activo" class="ml-2 text-sm text-gray-700">Producto activo</label>
                     </div>
                 </div>
 

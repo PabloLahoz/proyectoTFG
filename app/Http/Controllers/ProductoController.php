@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductoRequest;
 use App\Http\Requests\UpdateProductoRequest;
+use App\Models\Imagen;
 use App\Models\Producto;
 use App\Models\Proveedor;
 
@@ -27,14 +28,26 @@ class ProductoController extends Controller
     // Almacenar un nuevo producto
     public function store(StoreProductoRequest $request)
     {
-        $datos = $request->validated();
+        try {
+            $datos = $request->validated();
 
-        $datos['cantidad'] = 0;
-        $datos['activo'] = false;
+            $datos['cantidad'] = 0;
+            $datos['activo'] = false;
 
-        Producto::create($datos);
+            $producto = Producto::create($datos);
+            $id_producto = $producto->id;
+            if($id_producto > 0) {
+                if($this->subir_imagen($request, $id_producto)){
+                    return redirect()->route('admin.productos.index')->with('success', 'Producto creado exitosamente');
+                } else {
+                    return redirect()->route('admin.productos.index')->with('error', 'No se subio la imagen');
+                }
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.productos.index')->with('error', 'Fallo al crear producto!' . $th->getMessage());
+        }
 
-        return redirect()->route('admin.productos.index')->with('success', 'Producto creado correctamente.');
+
     }
 
     // Mostrar los detalles de un producto
@@ -72,5 +85,22 @@ class ProductoController extends Controller
         $item = Producto::find($id);
         $item->activo = $estado;
         return $item->save();
+    }
+
+    public function subir_imagen($request, $id_producto) {
+        $rutaImagen = $request->file('imagen')->store('img', 'public');
+        $nombreImagen = basename($rutaImagen);
+
+        $item = new Imagen();
+        $item->producto_id = $id_producto;
+        $item->nombre = $nombreImagen;
+        $item->ruta = $rutaImagen;
+        return $item->save();
+    }
+
+    public function catalogo()
+    {
+        $productos = Producto::all(); // O la consulta que necesites
+        return view('catalogo', compact('productos'));
     }
 }

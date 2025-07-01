@@ -32,4 +32,30 @@ class Producto extends Model
     public function proveedores() {
         return $this->belongsToMany(Proveedor::class, 'compras');
     }
+
+    protected static function booted()
+    {
+        static::deleting(function ($producto) {
+            foreach ($producto->imagenes as $imagen) {
+                // Eliminar archivo físico
+                if (\Storage::disk('public')->exists($imagen->ruta)) {
+                    \Storage::disk('public')->delete($imagen->ruta);
+                }
+
+                // Eliminar el registro de la imagen
+                $imagen->delete();
+            }
+        });
+    }
+
+    public function imagenes()
+    {
+        return $this->hasMany(Imagen::class);
+    }
+
+    public function imagen()
+    {
+        return $this->hasOne(Imagen::class);
+    }
+
 }

@@ -13,7 +13,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.productos.store') }}" method="POST" class="space-y-4">
+            <form action="{{ route('admin.productos.store') }}" method="POST" class="space-y-4" enctype="multipart/form-data">
                 @csrf
 
                 <div class="grid md:grid-cols-2 gap-4">
@@ -41,6 +41,11 @@
                             <option value="nuevo" {{ old('estado') === 'nuevo' ? 'selected' : '' }}>Nuevo</option>
                             <option value="seminuevo" {{ old('estado') === 'seminuevo' ? 'selected' : '' }}>Seminuevo</option>
                         </select>
+                    </div>
+
+                    <div>
+                        <label for="imagen">Imagen</label>
+                        <input type="file" id="imagen" name="imagen" class="form-control">
                     </div>
                 </div>
 

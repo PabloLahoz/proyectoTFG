@@ -26,10 +26,7 @@ class UpdateProductoRequest extends FormRequest
             'material'       => 'required|string|max:255',
             'dimensiones'    => 'required|string|max:255',
             'estado'         => 'required|in:nuevo,seminuevo',
-            'cantidad'       => 'required|integer|min:0',
-            'precio_ultimo_compra'  => 'required|numeric|min:0',
             'precio_venta'   => 'required|numeric|min:0',
-            'activo'         => 'boolean',
         ];
     }
 }
