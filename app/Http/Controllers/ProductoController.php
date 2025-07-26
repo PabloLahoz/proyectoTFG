@@ -40,7 +40,7 @@ class ProductoController extends Controller
                 if($this->subir_imagen($request, $id_producto)){
                     return redirect()->route('admin.productos.index')->with('success', 'Producto creado exitosamente');
                 } else {
-                    return redirect()->route('admin.productos.index')->with('error', 'No se subio la imagen');
+                    return redirect()->route('admin.productos.index')->with('error', 'No se subió la imagen');
                 }
             }
         } catch (\Throwable $th) {
@@ -100,7 +100,7 @@ class ProductoController extends Controller
 
     public function catalogo()
     {
-        $productos = Producto::all(); // O la consulta que necesites
+        $productos = Producto::with('imagen')->where('activo', true)->get();
         return view('catalogo', compact('productos'));
     }
 }

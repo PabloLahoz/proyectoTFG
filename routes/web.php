@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ClientePedidoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DashboardController;
@@ -21,8 +22,7 @@ Route::view("/contacto","contacto")->middleware(NoAdminAccess::class)->name("con
 Route::get('/', [\App\Http\Controllers\ProductoController::class, 'index']);
 Route::view("/", "home")->middleware(NoAdminAccess::class)->name("home");
 Route::get('/', [HomeController::class, 'index'])->middleware(NoAdminAccess::class)->name("home");
-Route::view('/catalogo', "catalogo")->middleware(NoAdminAccess::class)->name("catalogo");
-Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('catalogo');
+Route::get('/catalogo', [ProductoController::class, 'catalogo'])->middleware(NoAdminAccess::class)->name("catalogo");
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -34,13 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Rutas para CLIENTE autenticado
-Route::middleware(['auth'])->group(function () {
-    Route::get('/perfil', [UserController::class, 'show'])->name('perfil.show');
-    Route::get('/perfil/editar', [UserController::class, 'edit'])->name('perfil.edit');
-    Route::put('/perfil', [UserController::class, 'update'])->name('perfil.update');
-    Route::patch('/cuenta/cerrar', [UserController::class, 'cerrarCuenta'])->name('cuenta.cerrar');
-});
+
 
 Route::middleware(['auth', AdminMiddleware::class])
     ->get('/admin/dashboard', [DashboardController::class, 'index'])
@@ -81,4 +75,14 @@ Route::middleware(['auth'])->prefix('cliente')->name('cliente.')->group(function
 
 Route::resource('productos', ProductoController::class);
 
+// Rutas para CLIENTE no autenticado
+Route::post('/carrito/anadir/{producto}', [CartController::class, 'add'])->name('carrito.añadir');
+
+// Rutas para CLIENTE autenticado
+Route::middleware(['auth'])->group(function () {
+    Route::get('/perfil', [UserController::class, 'show'])->name('perfil.show');
+    Route::get('/perfil/editar', [UserController::class, 'edit'])->name('perfil.edit');
+    Route::put('/perfil', [UserController::class, 'update'])->name('perfil.update');
+    Route::patch('/cuenta/cerrar', [UserController::class, 'cerrarCuenta'])->name('cuenta.cerrar');
+});
 require __DIR__ . '/auth.php';
