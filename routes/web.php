@@ -23,6 +23,11 @@ Route::get('/', [\App\Http\Controllers\ProductoController::class, 'index']);
 Route::view("/", "home")->middleware(NoAdminAccess::class)->name("home");
 Route::get('/', [HomeController::class, 'index'])->middleware(NoAdminAccess::class)->name("home");
 Route::get('/catalogo', [ProductoController::class, 'catalogo'])->middleware(NoAdminAccess::class)->name("catalogo");
+Route::get('/carrito', [CartController::class, 'index'])->name('carrito.index');
+Route::delete('/carrito/{id}', [CartController::class, 'eliminar'])->name('carrito.eliminar');
+Route::delete('/carrito', [CartController::class, 'vaciar'])->name('carrito.vaciar');
+Route::put('/carrito/{id}', [CartController::class, 'actualizar'])->name('carrito.actualizar');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -77,6 +82,7 @@ Route::resource('productos', ProductoController::class);
 
 // Rutas para CLIENTE no autenticado
 Route::post('/carrito/anadir/{producto}', [CartController::class, 'add'])->name('carrito.añadir');
+Route::get('/catalogo/{producto}', [ProductoController::class, 'mostrar'])->name('catalogo.show');
 
 // Rutas para CLIENTE autenticado
 Route::middleware(['auth'])->group(function () {

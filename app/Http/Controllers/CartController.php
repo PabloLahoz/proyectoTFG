@@ -42,8 +42,25 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Producto añadido al carrito.');
     }
 
+    public function actualizar(Request $request, $id)
+    {
+        $request->validate([
+            'cantidad' => 'required|integer|min:1'
+        ]);
+
+        $carrito = session()->get('carrito', []);
+
+        if (isset($carrito[$id])) {
+            $carrito[$id]['cantidad'] = $request->cantidad;
+            session()->put('carrito', $carrito);
+            return redirect()->back()->with('success', 'Cantidad actualizada.');
+        }
+
+        return redirect()->back()->with('error', 'Producto no encontrado en el carrito.');
+    }
+
     // Eliminar producto del carrito
-    public function remove($productoId)
+    public function eliminar($productoId)
     {
         $carrito = session()->get('carrito', []);
 
@@ -56,7 +73,7 @@ class CartController extends Controller
     }
 
     // Vaciar todo el carrito
-    public function clear()
+    public function vaciar()
     {
         session()->forget('carrito');
         return redirect()->back()->with('success', 'Carrito vaciado.');

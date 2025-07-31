@@ -101,6 +101,12 @@ class ProductoController extends Controller
     public function catalogo()
     {
         $productos = Producto::with('imagen')->where('activo', true)->get();
-        return view('catalogo', compact('productos'));
+        return view('catalogo.index', compact('productos'));
     }
+
+    public function mostrar(Producto $producto)
+    {
+        return view('catalogo.show', compact('producto'));
+    }
+
 }

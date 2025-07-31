@@ -6,7 +6,9 @@
             @forelse($productos as $producto)
                 <div class="card bg-base-100 w-96 shadow-sm">
                     <figure>
-                        <img src="{{ asset('storage/' . $producto->imagen->ruta) }}" alt="{{ $producto->nombre }}" />
+                        <a href="{{ route('catalogo.show', $producto) }}">
+                            <img src="{{ asset('storage/' . $producto->imagen->ruta) }}" alt="{{ $producto->nombre }}" class="hover:opacity-80 transition duration-200" />
+                        </a>
                     </figure>
                     <div class="card-body">
                         <h2 class="card-title">{{ $producto->nombre }}</h2>
