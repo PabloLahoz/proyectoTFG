@@ -15,10 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cliente_id')->constrained('users')->cascadeOnDelete();
             $table->string('direccion_envio');
-            $table->enum('estado', ['pendiente', 'procesando', 'enviado', 'entregado', 'cancelado'])->default('pendiente');
+            $table->enum('estado', ['procesando', 'enviado', 'entregado', 'cancelado', 'pagado'])->default('pagado');
             $table->enum('metodo_pago', ['tarjeta','transferencia','paypal'])->default('tarjeta');
             $table->float('total_pedido');
-            $table->timestamp('fecha_pedido')->useCurrent();
+            $table->string('destinatario');
+            $table->string('codigo_postal');
+            $table->string('provincia');
+            $table->string('ciudad');
+            $table->string('telefono_contacto');
+            $table->timestamp('fecha_pedido')->nullable();
             $table->timestamps();
         });
     }

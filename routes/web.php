@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\EsCliente;
 use App\Http\Middleware\NoAdminAccess;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view("/contacto","contacto")->middleware(NoAdminAccess::class)->name("contacto");
-Route::get('/', [\App\Http\Controllers\ProductoController::class, 'index']);
+Route::view("/contacto","contacto")->middleware('noAdmin')->name("contacto");
+Route::get('/', [ProductoController::class, 'index']);
 Route::view("/", "home")->middleware(NoAdminAccess::class)->name("home");
 Route::get('/', [HomeController::class, 'index'])->middleware(NoAdminAccess::class)->name("home");
 Route::get('/catalogo', [ProductoController::class, 'catalogo'])->middleware(NoAdminAccess::class)->name("catalogo");
@@ -41,9 +42,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::middleware(['auth', AdminMiddleware::class])
-    ->get('/admin/dashboard', [DashboardController::class, 'index'])
-    ->name('admin.dashboard');
+Route::middleware(['auth', 'admin'])->get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 
 // Rutas para ADMIN
@@ -52,23 +51,23 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/clientes/{id}', [UserController::class, 'showCliente'])->name('admin.clientes.show');
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('clientes', UserController::class);
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('pedidos', PedidoController::class);
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('productos', ProductoController::class);
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('proveedores', ProveedorController::class);
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('compras', CompraController::class);
 });
 
@@ -85,10 +84,13 @@ Route::post('/carrito/anadir/{producto}', [CartController::class, 'add'])->name(
 Route::get('/catalogo/{producto}', [ProductoController::class, 'mostrar'])->name('catalogo.show');
 
 // Rutas para CLIENTE autenticado
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'esCliente'])->group(function () {
     Route::get('/perfil', [UserController::class, 'show'])->name('perfil.show');
     Route::get('/perfil/editar', [UserController::class, 'edit'])->name('perfil.edit');
     Route::put('/perfil', [UserController::class, 'update'])->name('perfil.update');
     Route::patch('/cuenta/cerrar', [UserController::class, 'cerrarCuenta'])->name('cuenta.cerrar');
+    Route::get('/cliente/pedidos', [ClientePedidoController::class, 'index'])->name('cliente.pedidos.index');
+    Route::get('/checkout', [PedidoController::class, 'checkout'])->name('checkout-wizard');
 });
+
 require __DIR__ . '/auth.php';

@@ -26,6 +26,7 @@ class StoreProductoRequest extends FormRequest
             'material'       => 'required|string|max:255',
             'dimensiones'    => 'required|string|max:255',
             'estado'         => 'required|in:nuevo,seminuevo',
+            'imagen'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

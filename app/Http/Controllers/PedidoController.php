@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePedidoRequest;
 use App\Models\DetallePedido;
 use App\Models\Pedido;
 use App\Models\Producto;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -83,5 +84,10 @@ class PedidoController extends Controller
 
         return redirect()->route('cliente.pedidos.index')
             ->with('success', 'Pedido realizado correctamente. Redirigiendo a su banco...');
+    }
+
+    public function checkout()
+    {
+        return view('carrito.checkout');
     }
 }

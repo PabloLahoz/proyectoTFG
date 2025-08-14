@@ -45,7 +45,7 @@
                         <tr>
                             <td class="px-4 py-3">
                                 @if($producto['imagen'])
-                                    <a href="{{ route('catalogo.show', $producto['id']) }}">
+                                    <a href="{{ route('catalogo.show', ['producto' => $producto['id']]) }}">
                                         <img src="{{ asset('storage/' . $producto['imagen']['ruta']) }}" alt="{{ $producto['nombre'] }}" class="w-16 h-16 object-cover rounded" />
                                     </a>
                                 @else
@@ -82,7 +82,7 @@
             </div>
 
             <div class="mt-6 text-right">
-                <a href="" class="btn btn-primary">Realizar pedido</a>
+                <a href="{{route ('checkout-wizard')}}" class="btn btn-primary">Realizar pedido</a>
             </div>
         @endif
     </div>

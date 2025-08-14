@@ -1,4 +1,4 @@
-<header class="bg-[#2F855A] shadow" x-data="{ open: false }">
+<header class="bg-green-800 shadow" x-data="{ open: false }">
     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center space-x-2">
