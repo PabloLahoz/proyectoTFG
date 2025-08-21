@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pedido;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,8 +33,9 @@ class ClientePedidoController extends Controller
         return view('cliente.pedidos.show', compact('pedido'));
     }
 
-    public function entregar(Pedido $pedido) {
-        if ($pedido->cliente_id !== Auth::id()) {
+    public function entregar(Pedido $pedido)
+    {
+        if ($pedido->cliente_id !== auth()->id()) {
             abort(403, 'No tienes permiso para entregar este pedido.');
         }
 
@@ -61,7 +63,20 @@ class ClientePedidoController extends Controller
         $pedido->estado = 'cancelado';
         $pedido->save();
 
-        return redirect()->route('cliente.pedidos.index')
-            ->with('success', 'El pedido ha sido cancelado y el stock se ha restaurado.');
+        return redirect()->route('cliente.pedidos.index')->with('success', 'El pedido ha sido cancelado y el stock se ha restaurado.');
     }
+
+    public function factura(Pedido $pedido) {
+        if ($pedido->cliente_id !== auth()->id()) {
+            abort(403, 'No puedes ver esta factura.');
+        }
+
+        $pedido->load('detalles.producto', 'cliente');
+
+        $pdf = Pdf::loadView('cliente.pedidos.factura', compact('pedido'));
+
+        return $pdf->stream('factura-pedido-' . $pedido->id . '.pdf');
+    }
+
+
 }

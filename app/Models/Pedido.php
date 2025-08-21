@@ -25,8 +25,8 @@ class Pedido extends Model
             }
         });
     }
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function cliente() {
+        return $this->belongsTo(User::class, 'cliente_id');
     }
 
     public function detalles()

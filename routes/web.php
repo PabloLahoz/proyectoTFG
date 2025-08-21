@@ -92,6 +92,7 @@ Route::middleware(['auth', 'esCliente'])->group(function () {
     Route::get('/cliente/pedidos/{pedido}', [ClientePedidoController::class, 'show'])->name('cliente.pedidos.show');
     Route::put('/cliente/pedidos/{pedido}/entregar', [ClientePedidoController::class, 'entregar'])->name('cliente.pedidos.entregar');
     Route::put('/cliente/pedidos/{pedido}/cancelar', [ClientePedidoController::class, 'cancelar'])->name('cliente.pedidos.cancelar');
+    Route::get('/cliente/pedidos/{pedido}/factura', [ClientePedidoController::class, 'factura'])->name('cliente.pedidos.factura');
     Route::get('/checkout', [PedidoController::class, 'checkout'])->name('checkout-wizard');
 });
 

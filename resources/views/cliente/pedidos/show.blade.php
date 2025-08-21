@@ -51,26 +51,39 @@
             </div>
 
             <div class="mt-6 flex space-x-4">
-                {{-- Botón entregar --}}
-                @if($pedido->estado !== 'entregado' && $pedido->estado !== 'cancelado')
-                    <form action="{{ route('cliente.pedidos.entregar', $pedido) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres marcar este pedido como entregado?');">
+                {{-- Botón de cancelar solo si el pedido está pagado --}}
+                @if ($pedido->estado === 'pagado')
+                    <form action="{{ route('cliente.pedidos.cancelar', $pedido) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                            Marcar como entregado
-                        </button>
-                    </form>
-
-                    {{-- Botón cancelar --}}
-                    <form action="{{ route('cliente.pedidos.cancelar', $pedido) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres cancelar este pedido?');">
-                        @csrf
-                        @method('PUT')
-                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                        <button type="submit"
+                                class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
                             Cancelar pedido
                         </button>
                     </form>
                 @endif
+
+                {{-- Botón de marcar como entregado si aún no lo está --}}
+                @if ($pedido->estado === 'pagado')
+                    <form action="{{ route('cliente.pedidos.entregar', $pedido) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit"
+                                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                            Marcar como entregado
+                        </button>
+                    </form>
+                @endif
+
+                {{-- Botón de factura solo si el pedido está entregado --}}
+                @if ($pedido->estado === 'entregado')
+                    <a href="{{ route('cliente.pedidos.factura', $pedido) }}" target="_blank"
+                       class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                        Ver factura
+                    </a>
+                @endif
             </div>
+
 
         </div>
     </div>

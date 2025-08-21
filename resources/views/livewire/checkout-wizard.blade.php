@@ -99,16 +99,6 @@
                 </div>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium mb-1">País</label>
-                <select class="w-full border rounded-lg p-2" wire:model="card_country">
-                    <option selected>España</option>
-                    <option>Francia</option>
-                    <option>Alemania</option>
-                    <option>Italia</option>
-                </select>
-            </div>
-
             <div class="flex justify-between mt-6">
                 <button type="button" wire:click="previousStep" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
                     Atrás
@@ -130,8 +120,8 @@
                 <p><span class="font-medium">Dirección:</span> {{ $direccion_envio }}, {{ $codigo_postal }} {{ $ciudad }} ({{ $provincia }})</p>
                 <p><span class="font-medium">Teléfono:</span> {{ $telefono_contacto }}</p>
                 <hr class="my-2">
-                <p><span class="font-medium">Nombre en tarjeta:</span> {{ $cardholder_name }}</p>
-                <p><span class="font-medium">Número de tarjeta:</span> **** **** **** {{ substr($card_number, -4) }}</p>
+                <p><span class="font-medium">Nombre en tarjeta:</span> Hola</p>
+                <p><span class="font-medium">Número de tarjeta:</span> **** **** **** 4242</p>
             </div>
 
             <div class="text-right font-bold text-xl">

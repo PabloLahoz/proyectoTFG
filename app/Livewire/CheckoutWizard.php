@@ -41,16 +41,6 @@ class CheckoutWizard extends Component
             ]);
         }
 
-        if ($this->step === 2) {
-            $this->validate([
-                'cardholder_name' => 'required',
-                'card_number' => 'required',
-                'card_exp_month' => 'required|integer|min:1|max:12',
-                'card_exp_year' => 'required|integer|min:' . date('Y'),
-                'card_cvv' => 'required|digits:3',
-            ]);
-        }
-
         $this->step++;
     }
 
