@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -35,17 +37,43 @@ class UserController extends Controller
 
         $cliente->update($request->only(['name', 'empresa', 'email']));
 
-        return redirect()->route('perfil.show')->with('status', 'Tu perfil ha sido actualizado correctamente.');
+        return redirect()->route('cliente.perfil.show')->with('status', 'Tu perfil ha sido actualizado correctamente.');
+    }
+
+    public function editPassword(){
+        $cliente = Auth::user();
+        return view('cliente.perfil.password', compact('cliente'));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $cliente = Auth::user();
+
+        $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        if (!Hash::check($request->current_password, $cliente->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => 'La contraseña actual no es correcta.',
+            ]);
+        }
+
+        $cliente->update([
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('cliente.perfil.show')->with('status', 'Tu contraseña ha sido actualizada correctamente.');
     }
 
     // Cliente: cerrar su cuenta
     public function cerrarCuenta(Request $request)
     {
         $user = Auth::user();
-        $user->activo = false;
-        $user->save();
-
         Auth::logout();
+
+        $user->delete();
 
         return redirect('/')->with('status', 'Tu cuenta ha sido desactivada.');
     }
@@ -53,7 +81,7 @@ class UserController extends Controller
     // Admin: ver listado de clientes
     public function index()
     {
-        $clientes = User::where('rol', 'cliente')->get();
+        $clientes = User::withTrashed()->where('rol', 'cliente')->get();
         return view('admin.clientes.index', compact('clientes'));
     }
 

@@ -32,10 +32,10 @@
                             <td class="px-4 py-2">{{ $cliente->email }}</td>
                             <td class="px-4 py-2 capitalize">{{ $cliente->rol }}</td>
                             <td class="px-4 py-2">
-                                @if($cliente->activo)
-                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">Activo</span>
+                                @if($cliente->delete_at)
+                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-red-700 bg-green-100 rounded-full">Desactivado</span>
                                 @else
-                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-red-700 bg-red-100 rounded-full">Inactivo</span>
+                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-green-700 bg-red-100 rounded-full">Activo</span>
                                 @endif
                             </td>
                         </tr>

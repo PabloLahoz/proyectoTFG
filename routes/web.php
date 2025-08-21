@@ -10,9 +10,6 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\EsCliente;
-use App\Http\Middleware\NoAdminAccess;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,9 +18,9 @@ Route::get('/', function () {
 
 Route::view("/contacto","contacto")->middleware('noAdmin')->name("contacto");
 Route::get('/', [ProductoController::class, 'index']);
-Route::view("/", "home")->middleware(NoAdminAccess::class)->name("home");
-Route::get('/', [HomeController::class, 'index'])->middleware(NoAdminAccess::class)->name("home");
-Route::get('/catalogo', [ProductoController::class, 'catalogo'])->middleware(NoAdminAccess::class)->name("catalogo");
+Route::view("/", "home")->middleware('noAdmin')->name("home");
+Route::get('/', [HomeController::class, 'index'])->middleware('noAdmin')->name("home");
+Route::get('/catalogo', [ProductoController::class, 'catalogo'])->middleware('noAdmin')->name("catalogo");
 Route::get('/carrito', [CartController::class, 'index'])->name('carrito.index');
 Route::delete('/carrito/{id}', [CartController::class, 'eliminar'])->name('carrito.eliminar');
 Route::delete('/carrito', [CartController::class, 'vaciar'])->name('carrito.vaciar');
@@ -85,11 +82,16 @@ Route::get('/catalogo/{producto}', [ProductoController::class, 'mostrar'])->name
 
 // Rutas para CLIENTE autenticado
 Route::middleware(['auth', 'esCliente'])->group(function () {
-    Route::get('/perfil', [UserController::class, 'show'])->name('perfil.show');
-    Route::get('/perfil/editar', [UserController::class, 'edit'])->name('perfil.edit');
-    Route::put('/perfil', [UserController::class, 'update'])->name('perfil.update');
-    Route::patch('/cuenta/cerrar', [UserController::class, 'cerrarCuenta'])->name('cuenta.cerrar');
+    Route::get('/cliente/perfil', [UserController::class, 'show'])->name('cliente.perfil.show');
+    Route::get('/cliente/perfil/editar', [UserController::class, 'edit'])->name('cliente.perfil.edit');
+    Route::put('/cliente/perfil/actualizar', [UserController::class, 'update'])->name('cliente.perfil.update');
+    Route::get('/cliente/perfil/password', [UserController::class, 'editPassword'])->name('cliente.perfil.password.edit');
+    Route::put('/cliente/perfil/password', [UserController::class, 'updatePassword'])->name('cliente.perfil.password.update');
+    Route::delete('/cliente/perfil/cerrar', [UserController::class, 'cerrarCuenta'])->name('cliente.perfil.cerrar');
     Route::get('/cliente/pedidos', [ClientePedidoController::class, 'index'])->name('cliente.pedidos.index');
+    Route::get('/cliente/pedidos/{pedido}', [ClientePedidoController::class, 'show'])->name('cliente.pedidos.show');
+    Route::put('/cliente/pedidos/{pedido}/entregar', [ClientePedidoController::class, 'entregar'])->name('cliente.pedidos.entregar');
+    Route::put('/cliente/pedidos/{pedido}/cancelar', [ClientePedidoController::class, 'cancelar'])->name('cliente.pedidos.cancelar');
     Route::get('/checkout', [PedidoController::class, 'checkout'])->name('checkout-wizard');
 });
 

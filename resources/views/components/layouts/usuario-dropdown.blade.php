@@ -17,7 +17,7 @@
     >
         @auth
             <p class="text-gray-800 font-semibold mb-2">¡Hola, {{ Auth::user()->name }}!</p>
-            <a href="" class="block text-blue-600 hover:underline mb-2">Ver perfil</a>
+            <a href="{{route('cliente.perfil.show')}}" class="block text-blue-600 hover:underline mb-2">Ver perfil</a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="w-full text-left text-red-600 hover:underline">Cerrar sesión</button>

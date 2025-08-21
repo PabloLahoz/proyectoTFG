@@ -32,16 +32,22 @@ class ClientePedidoController extends Controller
         return view('cliente.pedidos.show', compact('pedido'));
     }
 
+    public function entregar(Pedido $pedido) {
+        if ($pedido->cliente_id !== Auth::id()) {
+            abort(403, 'No tienes permiso para entregar este pedido.');
+        }
+
+        $pedido->estado = 'entregado';
+        $pedido->save();
+
+        return redirect()->route('cliente.pedidos.show', $pedido);
+    }
+
     public function cancelar(Pedido $pedido)
     {
         // Verificamos que el pedido pertenece al usuario autenticado
         if ($pedido->cliente_id !== auth()->id()) {
             abort(403, 'No puedes cancelar este pedido.');
-        }
-
-        // Solo se puede cancelar si está en estado pendiente
-        if ($pedido->estado !== 'pendiente') {
-            return back()->with('error', 'Este pedido ya no se puede cancelar.');
         }
 
         // Devolvemos el stock de cada producto en el pedido

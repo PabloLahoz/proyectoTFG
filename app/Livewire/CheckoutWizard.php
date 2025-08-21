@@ -19,12 +19,6 @@ class CheckoutWizard extends Component
     public $ciudad;
     public $telefono_contacto;
 
-    public $cardholder_name;
-    public $card_number;
-    public $card_exp_month;
-    public $card_exp_year;
-    public $card_cvv;
-
     public $step = 1;
     public $total;
 
@@ -78,18 +72,6 @@ class CheckoutWizard extends Component
             $paymentIntent = PaymentIntent::create([
                 'amount' => intval($this->total * 100), // céntimos
                 'currency' => 'eur',
-                /*'payment_method_data' => [
-                    'type' => 'card',
-                    'card' => [
-                        'number'    => $this->card_number,
-                        'exp_month' => $this->card_exp_month,
-                        'exp_year'  => $this->card_exp_year,
-                        'cvc'       => $this->card_cvv,
-                    ],
-                    'billing_details' => [
-                        'name' => $this->cardholder_name,
-                    ]
-                ],*/
                 'payment_method' => 'pm_card_visa',
                 'confirm' => true,
                 'confirmation_method' => 'manual',

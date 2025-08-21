@@ -1,8 +1,23 @@
 <x-layouts.layout>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="bg-white shadow-xl rounded-2xl p-6">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Mis pedidos</h2>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Mis pedidos</h2>
 
+        <div class="bg-white shadow rounded-lg p-4">
+            <nav class="space-y-2">
+                <a href="{{ route('cliente.perfil.show') }}"
+                   class="block px-4 py-2 rounded-md text-sm font-medium
+                          {{ request()->routeIs('cliente.perfil.show') ? 'bg-indigo-600 text-white' : 'text-gray-700 hover:bg-gray-100' }}">
+                    Perfil
+                </a>
+                <a href="{{ route('cliente.pedidos.index') }}"
+                   class="block px-4 py-2 rounded-md text-sm font-medium
+                          {{ request()->routeIs('cliente.pedidos.index') ? 'bg-indigo-600 text-white' : 'text-gray-700 hover:bg-gray-100' }}">
+                    Mis pedidos
+                </a>
+            </nav>
+        </div>
+
+        <div class="bg-white shadow-xl rounded-2xl p-6">
             @if(session('success'))
                 <div class="mb-4 text-green-700 bg-green-100 border border-green-200 px-4 py-2 rounded">
                     {{ session('success') }}

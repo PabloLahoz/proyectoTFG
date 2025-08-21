@@ -1,6 +1,4 @@
-<div class="max-w-3xl mx-auto p-6 bg-white rounded shadow">
-    <h2 class="text-2xl font-bold mb-6">Finalizar compra</h2>
-
+<div class="max-w-3xl mx-auto p-6">
     {{-- Mensajes --}}
     @if (session()->has('error'))
         <div class="bg-red-100 text-red-700 p-3 mb-4 rounded">
@@ -27,7 +25,7 @@
         </div>
     </div>
 
-    {{-- Paso 1: Dirección --}}
+    {{-- Step 1: Dirección --}}
     @if ($step === 1)
         <div class="space-y-4">
             <div>
@@ -35,33 +33,26 @@
                 <input type="text" wire:model="destinatario" class="w-full border p-2 rounded">
                 @error('destinatario') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
-
             <div>
                 <label class="block font-medium mb-1">Dirección de envío</label>
                 <input type="text" wire:model="direccion_envio" class="w-full border p-2 rounded">
                 @error('direccion_envio') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
-
-            <div class="grid grid-cols-3 gap-4">
-                <div>
-                    <label class="block font-medium mb-1">Código Postal</label>
-                    <input type="text" wire:model="codigo_postal" class="w-full border p-2 rounded">
-                    @error('codigo_postal') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                </div>
-
-                <div>
-                    <label class="block font-medium mb-1">Provincia</label>
-                    <input type="text" wire:model="provincia" class="w-full border p-2 rounded">
-                    @error('provincia') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                </div>
-
-                <div>
-                    <label class="block font-medium mb-1">Ciudad</label>
-                    <input type="text" wire:model="ciudad" class="w-full border p-2 rounded">
-                    @error('ciudad') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                </div>
+            <div>
+                <label class="block font-medium mb-1">Código Postal</label>
+                <input type="text" wire:model="codigo_postal" class="w-full border p-2 rounded">
+                @error('codigo_postal') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
-
+            <div>
+                <label class="block font-medium mb-1">Provincia</label>
+                <input type="text" wire:model="provincia" class="w-full border p-2 rounded">
+                @error('provincia') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+            <div>
+                <label class="block font-medium mb-1">Ciudad</label>
+                <input type="text" wire:model="ciudad" class="w-full border p-2 rounded">
+                @error('ciudad') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
             <div>
                 <label class="block font-medium mb-1">Teléfono de contacto</label>
                 <input type="text" wire:model="telefono_contacto" class="w-full border p-2 rounded">
@@ -76,42 +67,49 @@
         </div>
     @endif
 
-    {{-- Paso 2: Pago --}}
+    {{-- Step 2: Pago (único con recuadro) --}}
     @if ($step === 2)
-        <div class="space-y-4">
+        <div class="space-y-6 border rounded-lg p-6 bg-gray-50 shadow-sm">
+            <h3 class="text-lg font-semibold mb-4">💳 Datos de la tarjeta</h3>
+
             <div>
-                <label class="block font-medium mb-1">Nombre en la tarjeta</label>
-                <input type="text" wire:model="cardholder_name" class="w-full border p-2 rounded">
+                <label class="block text-sm font-medium mb-1">Nombre en la tarjeta</label>
+                <input type="text" wire:model="cardholder_name" class="w-full border rounded-lg p-2">
                 @error('cardholder_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <div>
-                <label class="block font-medium mb-1">Número de tarjeta</label>
-                <input type="text" wire:model="card_number" maxlength="16" class="w-full border p-2 rounded">
+                <label class="block text-sm font-medium mb-1">Número de tarjeta</label>
+                <input type="text" wire:model="card_number" maxlength="16" placeholder="1234 1234 1234 1234" class="w-full border rounded-lg p-2">
                 @error('card_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <div class="grid grid-cols-3 gap-4">
                 <div>
-                    <label class="block font-medium mb-1">Mes expiración</label>
-                    <input type="number" wire:model="card_exp_month" class="w-full border p-2 rounded">
-                    @error('card_exp_month') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    <label class="block text-sm font-medium mb-1">Expiración (MM)</label>
+                    <input type="number" wire:model="card_exp_month" placeholder="MM" class="w-full border rounded-lg p-2">
                 </div>
-
                 <div>
-                    <label class="block font-medium mb-1">Año expiración</label>
-                    <input type="number" wire:model="card_exp_year" class="w-full border p-2 rounded">
-                    @error('card_exp_year') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    <label class="block text-sm font-medium mb-1">Expiración (YY)</label>
+                    <input type="number" wire:model="card_exp_year" placeholder="YY" class="w-full border rounded-lg p-2">
                 </div>
-
                 <div>
-                    <label class="block font-medium mb-1">CVV</label>
-                    <input type="text" wire:model="card_cvv" maxlength="3" class="w-full border p-2 rounded">
-                    @error('card_cvv') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    <label class="block text-sm font-medium mb-1">CVC</label>
+                    <input type="text" wire:model="card_cvv" maxlength="3" placeholder="123" class="w-full border rounded-lg p-2">
                 </div>
             </div>
 
-            <div class="flex justify-between">
+            <div>
+                <label class="block text-sm font-medium mb-1">País</label>
+                <select class="w-full border rounded-lg p-2" wire:model="card_country">
+                    <option selected>España</option>
+                    <option>Francia</option>
+                    <option>Alemania</option>
+                    <option>Italia</option>
+                </select>
+            </div>
+
+            <div class="flex justify-between mt-6">
                 <button type="button" wire:click="previousStep" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
                     Atrás
                 </button>
@@ -122,18 +120,32 @@
         </div>
     @endif
 
-    {{-- Paso 3: Confirmación --}}
+    {{-- Step 3: Confirmación --}}
     @if ($step === 3)
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Confirmar pedido</h3>
-            <p>Revise que todos los datos sean correctos antes de proceder con el pago.</p>
+        <div class="space-y-6">
+            <h3 class="text-lg font-semibold">Resumen del pedido</h3>
 
-            <button type="button" wire:click="previousStep" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-                Atrás
-            </button>
-            <button type="button" wire:click="realizarPedido" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                Confirmar y pagar {{ number_format($total, 2) }} €
-            </button>
+            <div class="space-y-2">
+                <p><span class="font-medium">Destinatario:</span> {{ $destinatario }}</p>
+                <p><span class="font-medium">Dirección:</span> {{ $direccion_envio }}, {{ $codigo_postal }} {{ $ciudad }} ({{ $provincia }})</p>
+                <p><span class="font-medium">Teléfono:</span> {{ $telefono_contacto }}</p>
+                <hr class="my-2">
+                <p><span class="font-medium">Nombre en tarjeta:</span> {{ $cardholder_name }}</p>
+                <p><span class="font-medium">Número de tarjeta:</span> **** **** **** {{ substr($card_number, -4) }}</p>
+            </div>
+
+            <div class="text-right font-bold text-xl">
+                Total a pagar: {{ number_format($total, 2) }} €
+            </div>
+
+            <div class="flex justify-between mt-6">
+                <button type="button" wire:click="previousStep" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                    Atrás
+                </button>
+                <button type="button" wire:click="realizarPedido" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Confirmar y pagar {{ number_format($total, 2) }} €
+                </button>
+            </div>
         </div>
     @endif
 </div>

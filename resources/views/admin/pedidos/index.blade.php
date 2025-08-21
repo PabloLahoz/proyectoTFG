@@ -29,7 +29,7 @@
                             <td class="px-4 py-2">{{ $pedido->direccion_envio }}</td>
                             <td class="px-4 py-2 capitalize">{{ $pedido->estado }}</td>
                             <td class="px-4 py-2">{{ $pedido->metodo_pago }}</td>
-                            <td class="px-4 py-2">{{ number_format($pedido->fecha_pedido) }}</td>
+                            <td class="px-4 py-2">{{ $pedido->fecha_pedido->format('d/m/Y') }}</td>
                         </tr>
                     @empty
                         <tr>
