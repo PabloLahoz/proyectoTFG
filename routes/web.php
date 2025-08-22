@@ -46,6 +46,7 @@ Route::middleware(['auth', 'admin'])->get('/admin/dashboard', [DashboardControll
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/clientes', [UserController::class, 'index'])->name('admin.clientes.index');
     Route::get('/admin/clientes/{id}', [UserController::class, 'showCliente'])->name('admin.clientes.show');
+    Route::get('/admin/diagramas', [DashboardController::class, 'diagramas'])->name('admin.diagramas');
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {

@@ -43,6 +43,13 @@
             </a>
         </li>
 
+        <li>
+            <a href="{{route('admin.diagramas')}}">
+                <i class="fa-solid fa-users mr-2"></i>
+                Diagramas
+            </a>
+        </li>
+
     </ul>
 </aside>
 

@@ -16,7 +16,7 @@ class PedidoController extends Controller
 {
     public function index()
     {
-        $pedidos = Pedido::with('user') // Asegúrate de tener la relación definida en el modelo
+        $pedidos = Pedido::with('cliente') // Asegúrate de tener la relación definida en el modelo
         ->orderBy('created_at', 'desc')
             ->get();
 
