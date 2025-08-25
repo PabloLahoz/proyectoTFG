@@ -55,7 +55,7 @@ class ClientePedidoController extends Controller
         // Devolvemos el stock de cada producto en el pedido
         foreach ($pedido->detalles as $detalle) {
             $producto = $detalle->producto;
-            $producto->stock += $detalle->cantidad;
+            $producto->cantidad += $detalle->cantidad;
             $producto->save();
         }
 

@@ -46,8 +46,7 @@ class ProductoController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('admin.productos.index')->with('error', 'Fallo al crear producto!' . $th->getMessage());
         }
-
-
+        return redirect()->route('admin.productos.index')->with('success', 'Producto creado exitosamente');
     }
 
     // Mostrar los detalles de un producto

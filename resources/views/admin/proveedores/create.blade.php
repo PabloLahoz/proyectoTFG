@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.admin>
 
 
 <div class="mb-8">
@@ -53,4 +53,4 @@
         </div>
     </form>
 </section>
-</x-layouts.layout>
+</x-layouts.admin>

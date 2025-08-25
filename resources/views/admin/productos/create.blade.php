@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.admin>
     <div class="max-w-4xl mx-auto px-4 py-8">
         <div class="bg-white shadow-xl rounded-2xl p-6">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6">Crear nuevo producto</h2>
@@ -56,15 +56,15 @@
 
                 <div class="pt-6 flex justify-end gap-4">
                     <a href="{{ route('admin.productos.index') }}"
-                       class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">
+                       class="px-4 py-2 bg-gray-200 text-gray-700 rounded-2xl hover:bg-gray-300 transition">
                         Cancelar
                     </a>
                     <button type="submit"
-                            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                            class="px-4 py-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 transition">
                         Guardar
                     </button>
                 </div>
             </form>
         </div>
     </div>
-</x-layouts.layout>
+</x-layouts.admin>

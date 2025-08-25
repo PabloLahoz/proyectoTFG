@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.admin>
     <div class="max-w-4xl mx-auto px-4 py-8">
         <div class="bg-white shadow-xl rounded-2xl p-6">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6">Editar producto</h2>
@@ -64,4 +64,4 @@
             </form>
         </div>
     </div>
-</x-layouts.layout>
+</x-layouts.admin>

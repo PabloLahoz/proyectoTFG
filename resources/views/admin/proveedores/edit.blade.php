@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.admin>
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-800">Editar proveedor</h1>
     </div>
@@ -6,7 +6,7 @@
     <section class="bg-white p-6 rounded-xl shadow-md">
         <h2 class="text-xl font-semibold mb-4 text-gray-700">Editar Proveedor</h2>
 
-        <form action="{{ route('admin.proveedores.update', $proveedor->id) }}" method="POST" class="space-y-5">
+        <form action="{{ route('admin.proveedores.update', $proveedor) }}" method="POST" class="space-y-5">
             @csrf
             @method('PUT')
 
@@ -52,4 +52,4 @@
             </div>
         </form>
     </section>
-</x-layouts.layout>
+</x-layouts.admin>

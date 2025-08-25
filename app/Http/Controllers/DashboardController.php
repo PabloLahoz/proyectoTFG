@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index() {
-        $totalPedidos = Pedido::sum('total_pedido');
-        $cantidadPedidos = Pedido::count();
+        $totalPedidos = Pedido::where('estado', 'entregado')->sum('total_pedido');
+        $cantidadPedidos = Pedido::where('estado', 'entregado')->count();
         $productosBajosStock = Producto::where('cantidad', '<', 5)->get();
-        $pedidosRecientes = Pedido::orderBy('created_at', 'desc')->take(5)->get();
+        $pedidosRecientes = Pedido::where('estado', 'entregado')->orderBy('created_at', 'desc')->take(5)->get();
         return view('admin.dashboard', compact('totalPedidos', 'cantidadPedidos', 'productosBajosStock', 'pedidosRecientes'));
     }
 
@@ -44,7 +44,23 @@ class DashboardController extends Controller
             ->groupBy('estado')
             ->pluck('total','estado');
 
-        return view('admin.diagramas', compact('labels', 'data', 'pedidosPorEstado'));
+        $colores = [
+            'rgba(34, 197, 94, 0.7)',   // verde
+            'rgba(59, 130, 246, 0.7)', // azul
+            'rgba(239, 68, 68, 0.7)',  // rojo
+            'rgba(234, 179, 8, 0.7)',  // amarillo
+            'rgba(168, 85, 247, 0.7)', // violeta
+            'rgba(236, 72, 153, 0.7)'  // rosa
+        ];
+
+        $coloresEstados = [];
+        $i = 0;
+        foreach ($pedidosPorEstado as $estado => $total) {
+            $coloresEstados[$estado] = $colores[$i % count($colores)];
+            $i++;
+        }
+
+        return view('admin.diagramas', compact('labels','data','pedidosPorEstado','coloresEstados'));
     }
 
 }

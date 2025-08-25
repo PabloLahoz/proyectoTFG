@@ -1,46 +1,92 @@
-<x-layouts.layout>
+<x-layouts.admin>
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            });
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: 'Error',
+                    text: "{{ session('error') }}",
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+            });
+        </script>
+    @endif
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 class="text-3xl font-bold text-gray-800 mb-6">Proveedores</h1>
 
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Administrar Proveedores</h2>
-            <p class="text-gray-500 mb-4">Administrar los proveedores de nuestros productos.</p>
-
-            <div class="mb-4">
-                <a href="{{ route('admin.proveedores.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition">
-                    <i class="fa-solid fa-circle-plus mr-2"></i> Agregar nuevo proveedor
-                </a>
+        <div class="bg-white shadow-md rounded-2xl p-6">
+            <div class="mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                    <h2 class="text-2xl font-semibold text-gray-800">Listado de proveedores</h2>
+                    <a href="{{ route('admin.proveedores.create') }}"
+                       class="bg-blue-600 text-white px-4 py-2 rounded-2xl hover:bg-blue-700 transition w-full md:w-auto text-center">
+                        Nuevo proveedor
+                    </a>
+                </div>
+                <p class="text-gray-500 mt-2">
+                    Aquí puedes consultar, editar o eliminar proveedores registrados en el sistema.
+                </p>
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="min-w-full table-auto text-sm text-center border border-gray-200">
+            <div class="overflow-x-auto rounded-lg border border-gray-200">
+                <table class="min-w-full text-sm">
                     <thead class="bg-gray-100 text-gray-700">
                     <tr>
-                        <th class="px-4 py-2 border">ID</th>
-                        <th class="px-4 py-2 border">Nombre</th>
-                        <th class="px-4 py-2 border">Teléfono</th>
-                        <th class="px-4 py-2 border">Email</th>
-                        <th class="px-4 py-2 border">Dirección</th>
-                        <th class="px-4 py-2 border">Nota</th>
-                        <th class="px-4 py-2 border">Acciones</th>
+                        <th class="px-4 py-2">ID</th>
+                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Teléfono</th>
+                        <th class="px-4 py-2">Email</th>
+                        <th class="px-4 py-2">Dirección</th>
+                        <th class="px-4 py-2">Nota</th>
+                        <th class="px-4 py-2">Acciones</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                     @foreach ($items as $item)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2">{{ $item->id }}</td>
-                            <td class="px-4 py-2">{{ $item->nombre }}</td>
-                            <td class="px-4 py-2">{{ $item->telefono }}</td>
-                            <td class="px-4 py-2">{{ $item->email }}</td>
-                            <td class="px-4 py-2">{{ $item->direccion }}</td>
-                            <td class="px-4 py-2">{{ $item->notas }}</td>
-                            <td class="px-4 py-2 flex justify-center space-x-2">
-                                <a href="{{ route('admin.proveedores.edit', $item->id) }}" class="text-yellow-500 hover:text-yellow-600">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                                <a href="{{ route('admin.proveedores.show', $item->id) }}" class="text-red-600 hover:text-red-700">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </a>
+                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->id }}</td>
+                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->nombre }}</td>
+                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->telefono }}</td>
+                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->email }}</td>
+                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->direccion }}</td>
+                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->notas }}</td>
+                            <td class="px-4 py-2">
+                                <div class="flex items-center gap-2">
+                                    {{-- Botón Editar --}}
+                                    <a href="{{ route('admin.proveedores.edit', $item) }}"
+                                       class="bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-800 transition">
+                                        <x-heroicon-o-pencil-square class="w-5 h-5"/>
+                                    </a>
+
+                                    {{-- Botón Eliminar --}}
+                                    <form id="deleteForm{{$item->id}}"
+                                          action="{{ route('admin.proveedores.destroy', $item->id) }}"
+                                          method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button"
+                                                onclick="confirmDelete('deleteForm{{$item->id}}', '{{$item->nombre}}')"
+                                                class="bg-red-500 text-white p-2 rounded-xl hover:bg-red-600 transition">
+                                            <x-heroicon-o-trash class="w-5 h-5"/>
+                                        </button>
+                                    </form>
+
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -49,4 +95,4 @@
             </div>
         </div>
     </div>
-</x-layouts.layout>
+</x-layouts.admin>
