@@ -58,22 +58,22 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                     @foreach ($items as $item)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->id }}</td>
-                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->nombre }}</td>
-                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->telefono }}</td>
-                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->email }}</td>
-                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->direccion }}</td>
-                            <td class="px-4 py-2 text-gray-800 text-center">{{ $item->notas }}</td>
-                            <td class="px-4 py-2">
-                                <div class="flex items-center gap-2">
-                                    {{-- Botón Editar --}}
+                        <tr class="hover:bg-gray-50 {{ $item->trashed() ? 'bg-gray-100 text-gray-500' : '' }}">
+                            <td class="px-4 py-2 text-center">{{ $item->id }}</td>
+                            <td class="px-4 py-2 text-center">{{ $item->nombre }}</td>
+                            <td class="px-4 py-2 text-center">{{ $item->telefono }}</td>
+                            <td class="px-4 py-2 text-center">{{ $item->email }}</td>
+                            <td class="px-4 py-2 text-center">{{ $item->direccion }}</td>
+                            <td class="px-4 py-2 text-center">{{ $item->notas }}</td>
+                            <td class="px-4 py-2 flex items-center gap-2 justify-center">
+                                @if(!$item->trashed())
+                                    {{-- Editar --}}
                                     <a href="{{ route('admin.proveedores.edit', $item) }}"
                                        class="bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-800 transition">
                                         <x-heroicon-o-pencil-square class="w-5 h-5"/>
                                     </a>
 
-                                    {{-- Botón Eliminar --}}
+                                    {{-- Desactivar --}}
                                     <form id="deleteForm{{$item->id}}"
                                           action="{{ route('admin.proveedores.destroy', $item->id) }}"
                                           method="POST" class="inline">
@@ -85,8 +85,17 @@
                                             <x-heroicon-o-trash class="w-5 h-5"/>
                                         </button>
                                     </form>
-
-                                </div>
+                                @else
+                                    {{-- Reactivar --}}
+                                    <form action="{{ route('admin.proveedores.restore', $item->id) }}"
+                                          method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit"
+                                                class="bg-green-500 text-white p-2 rounded-xl hover:bg-green-600 transition">
+                                            <x-heroicon-o-arrow-path class="w-5 h-5"/>
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

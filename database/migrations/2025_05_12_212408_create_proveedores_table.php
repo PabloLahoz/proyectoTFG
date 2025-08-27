@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('telefono');
             $table->string('email');
             $table->string('direccion');
-            $table->string('notas');
+            $table->string('notas')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

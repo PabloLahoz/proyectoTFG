@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('dimensiones');
             $table->enum("estado", ['nuevo', 'seminuevo'])->default('seminuevo');
             $table->integer('cantidad')->default(0);
-            $table->float('precio_ultima_compra')->default(0);
-            $table->float('precio_venta')->default(0);
+            $table->decimal('precio_ultima_compra',10,2)->default(0);
+            $table->decimal('precio_venta',10,2)->nullable();
             $table->boolean('activo')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

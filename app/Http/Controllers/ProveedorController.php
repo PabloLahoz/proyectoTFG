@@ -13,7 +13,7 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        $items = Proveedor::all();
+        $items = Proveedor::withTrashed()->orderByRaw('deleted_at IS NULL DESC')->get();
         return view('admin.proveedores.index', compact('items'));
     }
 
@@ -69,5 +69,20 @@ class ProveedorController extends Controller
         $proveedor->delete();
         return redirect()->route('admin.proveedores.index')->with('success', 'Proveedor eliminado correctamente.');
     }
+
+    public function restore($id)
+    {
+        $proveedor = Proveedor::withTrashed()->findOrFail($id);
+
+        if ($proveedor->trashed()) {
+            $proveedor->restore();
+            return redirect()->route('admin.proveedores.index')
+                ->with('success', 'Proveedor restaurado correctamente.');
+        }
+
+        return redirect()->route('admin.proveedores.index')
+            ->with('info', 'El proveedor ya estaba activo.');
+    }
+
 
 }

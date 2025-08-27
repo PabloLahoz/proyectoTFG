@@ -55,11 +55,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('productos', ProductoController::class);
+    Route::patch('productos/{id}/restore', [ProductoController::class, 'restore'])->name('productos.restore');
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-    Route::resource('proveedores', ProveedorController::class)
-        ->parameters(['proveedores' => 'proveedor']);
+    Route::resource('proveedores', ProveedorController::class)->parameters(['proveedores' => 'proveedor']);
+    Route::patch('proveedores/{proveedor}/restore', [ProveedorController::class, 'restore'])->name('proveedores.restore');
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
