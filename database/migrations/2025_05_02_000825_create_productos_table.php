@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('material');
             $table->string('dimensiones');
-            $table->enum("estado", ['nuevo', 'seminuevo'])->default('seminuevo');
+            $table->enum("condicion", ['nuevo', 'seminuevo'])->default('seminuevo');
             $table->integer('cantidad')->default(0);
             $table->decimal('precio_ultima_compra',10,2)->default(0);
             $table->decimal('precio_venta',10,2)->nullable();
+            $table->string('estado')->default('Desactivado');
             $table->boolean('activo')->default(false);
             $table->timestamps();
             $table->softDeletes();

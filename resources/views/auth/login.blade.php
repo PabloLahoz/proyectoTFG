@@ -1,12 +1,12 @@
 <x-layouts.layout>
-    <section class="flex flex-1 w-full">
+    <section class="flex flex-1">
         <!-- Imagen a la izquierda (solo en pantallas medianas o más grandes) -->
-        <div class="hidden md:block w-1/2">
-            <img src="{{ asset('img/iniciosesion.jpg') }}" alt="Login" class="w-full h-full object-cover">
+        <div class="hidden md:block w-1/2 h-full">
+            <img src="{{ asset('img/iniciosesion.jpg') }}" alt="Login" class="object-cover w-full">
         </div>
 
         <!-- Formulario a la derecha -->
-        <div class="w-full md:w-1/2 flex items-center justify-center p-8">
+        <div class="w-full md:w-1/2 flex items-center justify-center p-8 h-available">
             <form method="POST" action="{{ route('login') }}" class="w-full max-w-md">
                 @csrf
 

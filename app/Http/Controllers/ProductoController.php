@@ -15,7 +15,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::withTrashed()->orderByRaw('deleted_at IS NULL DESC')->get();
+        $productos = Producto::withTrashed()->with('imagen')->orderByRaw('deleted_at IS NULL DESC')->get();
         return view('admin.productos.index', compact('productos'));
     }
 
@@ -77,7 +77,7 @@ class ProductoController extends Controller
             return redirect()->back()->with('error', 'No se puede eliminar un producto con stock disponible.');
         }
 
-        // Forzar que esté inactivo antes de eliminar
+        $producto->estado = 'Desactivado';
         $producto->activo = false;
         $producto->save();
 
@@ -120,6 +120,9 @@ class ProductoController extends Controller
 
         if ($producto->trashed()) {
             $producto->restore();
+
+            $producto->refresh();
+            $producto->save();
             return redirect()->route('admin.productos.index')
                 ->with('success', 'Producto restaurado correctamente.');
         }

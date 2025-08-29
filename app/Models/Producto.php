@@ -15,10 +15,11 @@ class Producto extends Model
         'nombre',
         'material',
         'dimensiones',
-        'estado',
+        'condicion',
         'cantidad',
         'precio_ultima_compra',
         'precio_venta',
+        'estado',
         'activo'
     ];
 
@@ -44,41 +45,40 @@ class Producto extends Model
         return $this->hasOne(Imagen::class);
     }
 
-    public function getEstadoAttribute()
-    {
-        if ($this->trashed()) {
-            return 'Eliminado';
-        }
-
-        if ($this->cantidad <= 0) {
-            return 'Agotado';
-        }
-
-        return 'Disponible';
-    }
-
     protected static function booted()
     {
         static::saving(function ($producto) {
-            // nunca negativo
+            // Asegurarse de que cantidad nunca sea negativa
             if ($producto->cantidad < 0) {
                 $producto->cantidad = 0;
             }
 
-            // activar si hay cantidad y precio de venta definido y > 0
-            if ($producto->cantidad > 0 && $producto->precio_venta !== null && $producto->precio_venta > 0) {
-                $producto->activo = true;
+            // Solo determinar el estado automático si el producto NO está desactivado manualmente
+            if (is_null($producto->deleted_at)) {
+                if ($producto->cantidad > 0 && $producto->precio_venta > 0) {
+                    $producto->estado = 'Disponible';
+                    $producto->activo = true;
+                } else {
+                    // Si no cumple las condiciones de disponible, está agotado
+                    $producto->estado = 'Agotado';
+                    $producto->activo = false;
+                }
             } else {
+                // Si está desactivado manualmente
+                $producto->estado = 'Desactivado';
                 $producto->activo = false;
             }
         });
 
         static::deleting(function ($producto) {
-            foreach ($producto->imagenes as $imagen) {
-                if (\Storage::disk('public')->exists($imagen->ruta)) {
-                    \Storage::disk('public')->delete($imagen->ruta);
+            // Solo eliminar imágenes si se está forzando el borrado
+            if ($producto->isForceDeleting()) {
+                foreach ($producto->imagenes as $imagen) {
+                    if (\Storage::disk('public')->exists($imagen->ruta)) {
+                        \Storage::disk('public')->delete($imagen->ruta);
+                    }
+                    $imagen->delete();
                 }
-                $imagen->delete();
             }
         });
     }

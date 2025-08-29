@@ -48,10 +48,6 @@ class CompraController extends Controller
         if ($compra->save()) {
             $producto->cantidad += $datos['cantidad'];
             $producto->precio_ultima_compra = $datos['precio_compra'];
-            // Reactivar el producto si estaba desactivado
-            if (!$producto->activo && $producto->cantidad > 0) {
-                $producto->activo = true;
-            }
             $producto->save();
         }
 

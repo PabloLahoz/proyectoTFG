@@ -9,6 +9,7 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\StripeCheckoutController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -93,6 +94,8 @@ Route::middleware(['auth', 'esCliente'])->group(function () {
     Route::put('/cliente/pedidos/{pedido}/cancelar', [ClientePedidoController::class, 'cancelar'])->name('cliente.pedidos.cancelar');
     Route::get('/cliente/pedidos/{pedido}/factura', [ClientePedidoController::class, 'factura'])->name('cliente.pedidos.factura');
     Route::get('/checkout', [PedidoController::class, 'checkout'])->name('checkout-wizard');
+    Route::get('/checkout/success', [StripeCheckoutController::class, 'success'])->name('checkout.success');
+    Route::get('/checkout/cancel', [StripeCheckoutController::class, 'cancel'])->name('checkout.cancel');
 });
 
 require __DIR__ . '/auth.php';

@@ -54,57 +54,61 @@
                         <th class="px-4 py-2">Nombre</th>
                         <th class="px-4 py-2">Material</th>
                         <th class="px-4 py-2">Dimensiones</th>
-                        <th class="px-4 py-2">Estado</th>
+                        <th class="px-4 py-2">Condición</th>
                         <th class="px-4 py-2">Cantidad</th>
                         <th class="px-4 py-2">Imagen</th>
                         <th class="px-4 py-2">Precio Venta</th>
                         <th class="px-4 py-2">Precio Última Compra</th>
-                        <th class="px-4 py-2">Disponibilidad</th>
+                        <th class="px-4 py-2">Estado</th>
                         <th class="px-4 py-2 text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                     @forelse($productos as $producto)
-                        <tr class="hover:bg-gray-50 {{ $producto->trashed() ? 'bg-gray-100 text-gray-500' : '' }}">
+                        <tr class="hover:bg-gray-50 {{ $producto->trashed() ? 'bg-gray-100 text-gray-500' : 'text-gray-800' }}">
                             <td class="px-4 py-2 text-center">{{ $producto->nombre }}</td>
                             <td class="px-4 py-2 text-center">{{ $producto->material }}</td>
                             <td class="px-4 py-2 text-center">{{ $producto->dimensiones }}</td>
-                            <td class="px-4 py-2 text-center">{{ $producto->estado }}</td>
+                            <td class="px-4 py-2 text-center">{{ $producto->condicion }}</td>
                             <td class="px-4 py-2 text-center">{{ $producto->cantidad }}</td>
                             <td class="px-4 py-2">
-                                <img src="{{ asset('storage/' . $producto->imagen->ruta) }}" alt="" width="60px" height="60px">
-                            </td>
-                            <td class="px-4 py-2 text-center">€ {{ number_format($producto->precio_venta, 2) }}</td>
-                            <td class="px-4 py-2 text-center">€ {{ number_format($producto->precio_ultima_compra, 2) }}</td>
-                            <td class="px-4 py-2">
-                                @if($producto->activo && !$producto->trashed())
-                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">Disponible</span>
+                                @if($producto->imagen)
+                                    <img src="{{ asset('storage/' . $producto->imagen->ruta) }}" alt="" width="60" height="60">
                                 @else
-                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-red-700 bg-red-100 rounded-full">No disponible</span>
+                                    <span class="text-gray-400 italic">Sin imagen</span>
+                                @endif
+                            </td>
+                            <td class="px-4 py-2 text-center">€ {{ number_format($producto->precio_venta ?? 0, 2) }}</td>
+                            <td class="px-4 py-2 text-center">€ {{ number_format($producto->precio_ultima_compra, 2) }}</td>
+                            <td class="px-4 py-2 text-center">
+                                @if(!is_null($producto->deleted_at))
+                                    {{-- Producto desactivado manualmente --}}
+                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 rounded-full">Desactivado</span>
+                                @elseif($producto->estado === 'Disponible')
+                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">{{ $producto->estado }}</span>
+                                @elseif($producto->estado === 'Agotado')
+                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-yellow-700 bg-yellow-100 rounded-full">{{ $producto->estado }}</span>
+                                @else
+                                    <span class="inline-block px-2 py-1 text-xs font-semibold text-red-700 bg-red-100 rounded-full">{{ $producto->estado }}</span>
                                 @endif
                             </td>
                             <td class="px-4 py-2 flex justify-center gap-2">
                                 @if(!$producto->trashed())
-                                    {{-- Editar --}}
-                                    <a href="{{ route('admin.productos.edit', $producto) }}"
-                                       class="bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-800 transition">
+                                    <a href="{{ route('admin.productos.edit', $producto) }}" class="bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-800 transition">
                                         <x-heroicon-o-pencil-square class="w-5 h-5"/>
                                     </a>
-
-                                    {{-- Eliminar --}}
                                     <form id="deleteForm{{$producto->id}}" action="{{ route('admin.productos.destroy', $producto) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button"
-                                                onclick="confirmDeleteProduct('deleteForm{{$producto->id}}', '{{$producto->nombre}}', {{$producto->cantidad}})"
+                                        <button type="button" onclick="confirmDeleteProduct('deleteForm{{$producto->id}}', '{{$producto->nombre}}', {{$producto->cantidad}})"
                                                 class="bg-red-500 text-white p-2 rounded-xl hover:bg-red-600 transition">
                                             <x-heroicon-o-trash class="w-5 h-5"/>
                                         </button>
                                     </form>
                                 @else
-                                    {{-- Reactivar --}}
                                     <form action="{{ route('admin.productos.restore', $producto->id) }}" method="POST" class="inline">
                                         @csrf
+                                        @method('PATCH')
                                         <button type="submit" class="bg-green-500 text-white p-2 rounded-xl hover:bg-green-600 transition">
                                             <x-heroicon-o-arrow-path class="w-5 h-5"/>
                                         </button>
@@ -114,8 +118,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="px-4 py-4 text-center text-gray-500">No hay productos registrados.
-                            </td>
+                            <td colspan="10" class="px-4 py-4 text-center text-gray-500">No hay productos registrados.</td>
                         </tr>
                     @endforelse
                     </tbody>

@@ -58,7 +58,7 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                     @foreach ($items as $item)
-                        <tr class="hover:bg-gray-50 {{ $item->trashed() ? 'bg-gray-100 text-gray-500' : '' }}">
+                        <tr class="hover:bg-gray-50 {{ $item->trashed() ? 'bg-gray-100 text-gray-500' : 'text-gray-800' }}">
                             <td class="px-4 py-2 text-center">{{ $item->id }}</td>
                             <td class="px-4 py-2 text-center">{{ $item->nombre }}</td>
                             <td class="px-4 py-2 text-center">{{ $item->telefono }}</td>
@@ -87,9 +87,9 @@
                                     </form>
                                 @else
                                     {{-- Reactivar --}}
-                                    <form action="{{ route('admin.proveedores.restore', $item->id) }}"
-                                          method="POST" class="inline">
+                                    <form action="{{ route('admin.proveedores.restore', $item->id) }}" class="inline" method="post">
                                         @csrf
+                                        @method('PATCH')
                                         <button type="submit"
                                                 class="bg-green-500 text-white p-2 rounded-xl hover:bg-green-600 transition">
                                             <x-heroicon-o-arrow-path class="w-5 h-5"/>

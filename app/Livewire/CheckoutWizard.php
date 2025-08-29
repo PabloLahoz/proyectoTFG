@@ -7,8 +7,9 @@ use App\Models\Pedido;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Stripe\PaymentIntent;
 use Stripe\Stripe;
+use Stripe\Checkout\Session;
+use Stripe\Exception\ApiErrorException;
 
 class CheckoutWizard extends Component
 {
@@ -21,6 +22,9 @@ class CheckoutWizard extends Component
 
     public $step = 1;
     public $total;
+    public $checkoutUrl;
+    public $stripeError;
+    public $shouldRedirect = false;
 
     public function mount()
     {
@@ -41,6 +45,11 @@ class CheckoutWizard extends Component
             ]);
         }
 
+        if ($this->step === 2) {
+            $this->createCheckoutSession();
+            return; // No incrementar step todavía
+        }
+
         $this->step++;
     }
 
@@ -49,72 +58,86 @@ class CheckoutWizard extends Component
         $this->step--;
     }
 
-    public function realizarPedido()
+    public function createCheckoutSession()
     {
-        $user = Auth::user();
-        $carrito = session('carrito', []);
-
         try {
-            // Configurar Stripe
             Stripe::setApiKey(config('services.stripe.secret'));
 
-            // Crear PaymentIntent con tarjeta
-            $paymentIntent = PaymentIntent::create([
-                'amount' => intval($this->total * 100), // céntimos
-                'currency' => 'eur',
-                'payment_method' => 'pm_card_visa',
-                'confirm' => true,
-                'confirmation_method' => 'manual',
-                'return_url' => route('cliente.pedidos.index'),
-            ]);
+            $lineItems = [];
+            $carrito = session('carrito', []);
 
-            // Comprobar si el pago fue aprobado
-            if ($paymentIntent->status !== 'succeeded') {
-                session()->flash('error', 'El pago no fue aprobado.');
-                return;
-            }
-
-            // Crear pedido en BD
-            $pedido = Pedido::create([
-                'cliente_id'        => $user->id,
-                'destinatario'      => $this->destinatario,
-                'direccion_envio'   => $this->direccion_envio,
-                'codigo_postal'     => $this->codigo_postal,
-                'provincia'         => $this->provincia,
-                'ciudad'            => $this->ciudad,
-                'telefono_contacto' => $this->telefono_contacto,
-                'estado'            => 'pagado', // ya queda pagado desde el inicio
-                'metodo_pago'       => 'tarjeta',
-                'total_pedido'      => $this->total,
-            ]);
-
-            // Insertar detalles de pedido y reducir stock
             foreach ($carrito as $item) {
-                DetallePedido::create([
-                    'pedido_id'      => $pedido->id,
-                    'producto_id'    => $item['id'],
-                    'cantidad'       => $item['cantidad'],
-                    'precio_unitario'=> $item['precio'],
-                ]);
-
-                Producto::find($item['id'])->decrement('cantidad', $item['cantidad']);
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => $item['nombre'],
+                        ],
+                        'unit_amount' => intval($item['precio'] * 100),
+                    ],
+                    'quantity' => $item['cantidad'],
+                ];
             }
 
-            // Vaciar carrito
-            session()->forget('carrito');
+            if (empty($lineItems)) {
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Pedido',
+                        ],
+                        'unit_amount' => intval($this->total * 100),
+                    ],
+                    'quantity' => 1,
+                ];
+            }
 
-            // Redirigir con mensaje de éxito
-            return redirect()->route('cliente.pedidos.index')
-                ->with('success', 'Pedido pagado y registrado con éxito.');
+            $session = Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => $lineItems,
+                'mode' => 'payment',
+                'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('checkout.cancel'),
+                'customer_email' => Auth::user()->email,
+                'metadata' => [
+                    'user_id' => Auth::id(),
+                    'destinatario' => $this->destinatario,
+                    'direccion_envio' => $this->direccion_envio,
+                    'codigo_postal' => $this->codigo_postal,
+                    'provincia' => $this->provincia,
+                    'ciudad' => $this->ciudad,
+                    'telefono_contacto' => $this->telefono_contacto,
+                ],
+            ]);
 
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('error', 'Error en el pago: ' . $e->getMessage());
+            $this->checkoutUrl = $session->url;
+            $this->shouldRedirect = true;
+            $this->step = 3; // Ahora sí avanzamos al paso 3
+
+        } catch (ApiErrorException $e) {
+            $this->stripeError = 'Error al crear la sesión de pago: ' . $e->getMessage();
+            \Log::error('Stripe Checkout Error: ' . $e->getMessage());
         }
+    }
+
+    protected $listeners = ['redirect-to-checkout' => 'redirectToCheckout'];
+    public function redirectToCheckout()
+    {
+        if ($this->checkoutUrl) {
+            return redirect()->away($this->checkoutUrl);
+        }
+
+        $this->stripeError = 'No hay URL de checkout disponible';
+        $this->step = 2; // Volver al paso anterior
     }
 
     public function render()
     {
+        // Redirigir automáticamente si shouldRedirect es true
+        if ($this->shouldRedirect && $this->checkoutUrl) {
+            $this->redirectToCheckout();
+        }
+
         return view('livewire.checkout-wizard')
             ->layout('layouts.layout', ['titulo' => 'Checkout']);
     }

@@ -6,28 +6,23 @@
         </div>
     @endif
 
-    @if (session()->has('success'))
-        <div class="bg-green-100 text-green-700 p-3 mb-4 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    {{-- Barra de progreso de pasos --}}
+    {{-- Barra de progreso --}}
     <div class="flex justify-between mb-6">
         <div class="flex-1 text-center {{ $step === 1 ? 'font-bold text-blue-600' : '' }}">
             1. Dirección
         </div>
         <div class="flex-1 text-center {{ $step === 2 ? 'font-bold text-blue-600' : '' }}">
-            2. Pago
+            2. Resumen
         </div>
         <div class="flex-1 text-center {{ $step === 3 ? 'font-bold text-blue-600' : '' }}">
-            3. Confirmación
+            3. Pago
         </div>
     </div>
 
     {{-- Step 1: Dirección --}}
     @if ($step === 1)
         <div class="space-y-4">
+            <!-- ... (formulario de dirección) ... -->
             <div>
                 <label class="block font-medium mb-1">Destinatario</label>
                 <input type="text" wire:model="destinatario" class="w-full border p-2 rounded">
@@ -58,7 +53,6 @@
                 <input type="text" wire:model="telefono_contacto" class="w-full border p-2 rounded">
                 @error('telefono_contacto') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
-
             <div class="flex justify-end">
                 <button type="button" wire:click="nextStep" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Siguiente
@@ -67,51 +61,8 @@
         </div>
     @endif
 
-    {{-- Step 2: Pago (único con recuadro) --}}
+    {{-- Step 2: Resumen --}}
     @if ($step === 2)
-        <div class="space-y-6 border rounded-lg p-6 bg-gray-50 shadow-sm">
-            <h3 class="text-lg font-semibold mb-4">💳 Datos de la tarjeta</h3>
-
-            <div>
-                <label class="block text-sm font-medium mb-1">Nombre en la tarjeta</label>
-                <input type="text" wire:model="cardholder_name" class="w-full border rounded-lg p-2">
-                @error('cardholder_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium mb-1">Número de tarjeta</label>
-                <input type="text" wire:model="card_number" maxlength="16" placeholder="1234 1234 1234 1234" class="w-full border rounded-lg p-2">
-                @error('card_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
-
-            <div class="grid grid-cols-3 gap-4">
-                <div>
-                    <label class="block text-sm font-medium mb-1">Expiración (MM)</label>
-                    <input type="number" wire:model="card_exp_month" placeholder="MM" class="w-full border rounded-lg p-2">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-1">Expiración (YY)</label>
-                    <input type="number" wire:model="card_exp_year" placeholder="YY" class="w-full border rounded-lg p-2">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-1">CVC</label>
-                    <input type="text" wire:model="card_cvv" maxlength="3" placeholder="123" class="w-full border rounded-lg p-2">
-                </div>
-            </div>
-
-            <div class="flex justify-between mt-6">
-                <button type="button" wire:click="previousStep" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-                    Atrás
-                </button>
-                <button type="button" wire:click="nextStep" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    Siguiente
-                </button>
-            </div>
-        </div>
-    @endif
-
-    {{-- Step 3: Confirmación --}}
-    @if ($step === 3)
         <div class="space-y-6">
             <h3 class="text-lg font-semibold">Resumen del pedido</h3>
 
@@ -119,23 +70,69 @@
                 <p><span class="font-medium">Destinatario:</span> {{ $destinatario }}</p>
                 <p><span class="font-medium">Dirección:</span> {{ $direccion_envio }}, {{ $codigo_postal }} {{ $ciudad }} ({{ $provincia }})</p>
                 <p><span class="font-medium">Teléfono:</span> {{ $telefono_contacto }}</p>
-                <hr class="my-2">
-                <p><span class="font-medium">Nombre en tarjeta:</span> Hola</p>
-                <p><span class="font-medium">Número de tarjeta:</span> **** **** **** 4242</p>
             </div>
 
             <div class="text-right font-bold text-xl">
                 Total a pagar: {{ number_format($total, 2) }} €
             </div>
 
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4">
+                <p class="font-bold">Modo de prueba</p>
+                <p>Serás redirigido a Stripe Checkout para realizar el pago de prueba</p>
+                <p>Usa: <strong>4242 4242 4242 4242</strong> - Fecha futura - CVC 123</p>
+            </div>
+
+            @if($stripeError)
+                <div class="bg-red-100 text-red-700 p-3 rounded">
+                    {{ $stripeError }}
+                </div>
+            @endif
+
             <div class="flex justify-between mt-6">
                 <button type="button" wire:click="previousStep" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
                     Atrás
                 </button>
-                <button type="button" wire:click="realizarPedido" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                    Confirmar y pagar {{ number_format($total, 2) }} €
+                <button type="button" wire:click="nextStep" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Proceder al pago
                 </button>
             </div>
+        </div>
+    @endif
+
+    {{-- Step 3: Redirección a Stripe --}}
+    @if ($step === 3)
+        <div class="text-center py-8">
+            @if($checkoutUrl)
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <h3 class="text-lg font-semibold mb-2">Redirigiendo a Stripe Checkout...</h3>
+                <p class="text-gray-600 mb-4">Estamos preparando tu sesión de pago segura.</p>
+
+                {{-- Redirección automática desde Livewire --}}
+                <script>
+                    // Pequeño delay para que el usuario vea el mensaje
+                    setTimeout(function() {
+                        // Forzar la redirección mediante Livewire
+                        Livewire.dispatch('redirect-to-checkout');
+                    }, 1500);
+                </script>
+
+                <div class="mt-6">
+                    <p class="text-sm text-gray-500 mb-2">Si la redirección automática no funciona:</p>
+                    <a href="{{ $checkoutUrl }}"
+                       class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 inline-block">
+                        Haz clic aquí para ir al pago
+                    </a>
+                </div>
+            @else
+                <div class="bg-red-100 text-red-700 p-3 rounded">
+                    Error: No se pudo crear la sesión de pago. {{ $stripeError }}
+                </div>
+                <div class="mt-4">
+                    <button wire:click="previousStep" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                        Volver atrás
+                    </button>
+                </div>
+            @endif
         </div>
     @endif
 </div>

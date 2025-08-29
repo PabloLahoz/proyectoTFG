@@ -10,4 +10,9 @@ class Imagen extends Model
     use HasFactory;
     protected $table = 'imagenes';
     protected $fillable = ['producto_id', 'nombre', 'ruta'];
+
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class)->withTrashed();
+    }
 }
