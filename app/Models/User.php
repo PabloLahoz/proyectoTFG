@@ -54,6 +54,18 @@ class User extends Authenticatable
         return $this->hasMany(Pedido::class);
     }
 
+    public function direcciones()
+    {
+        return $this->hasMany(Direccion::class, 'cliente_id')
+            ->where('cliente_id', auth()->id());
+    }
+
+    public function direccionPredeterminada()
+    {
+        return $this->hasOne(Direccion::class, 'cliente_id')
+            ->where('predeterminada', true);
+    }
+
     public function esAdministrador()
     {
         return $this->rol === 'administrador';

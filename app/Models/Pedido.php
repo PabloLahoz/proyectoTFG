@@ -11,7 +11,7 @@ class Pedido extends Model
     /** @use HasFactory<\Database\Factories\PedidoFactory> */
     use HasFactory;
 
-    protected $fillable = ['cliente_id','direccion_envio','estado','metodo_pago','fecha_pedido','destinatario','codigo_postal','provincia','ciudad','telefono_contacto','total_pedido'];
+    protected $fillable = ['cliente_id','direccion_id','estado','metodo_pago','fecha_pedido','total_pedido','stripe_session_id','stripe_payment_id'];
 
     protected $casts = [
         'fecha_pedido' => 'datetime',

@@ -78,6 +78,11 @@ class UserController extends Controller
         return redirect('/')->with('status', 'Tu cuenta ha sido desactivada.');
     }
 
+    public function direcciones()
+    {
+        return view('cliente.direcciones.index');
+    }
+
     // Admin: ver listado de clientes
     public function index()
     {

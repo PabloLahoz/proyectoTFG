@@ -9,20 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained('users')->cascadeOnDelete();
-            $table->string('direccion_envio');
+            $table->foreignId('cliente_id')->constrained('users')->onDelete('cascade');
             $table->enum('estado', ['procesando', 'enviado', 'entregado', 'cancelado', 'pagado'])->default('pagado');
-            $table->enum('metodo_pago', ['tarjeta','transferencia','paypal'])->default('tarjeta');
+            $table->enum('metodo_pago', ['tarjeta', 'transferencia', 'paypal'])->default('tarjeta');
             $table->float('total_pedido');
-            $table->string('destinatario');
-            $table->string('codigo_postal');
-            $table->string('provincia');
-            $table->string('ciudad');
-            $table->string('telefono_contacto');
             $table->timestamp('fecha_pedido')->nullable();
             $table->timestamps();
         });

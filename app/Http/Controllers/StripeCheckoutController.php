@@ -24,23 +24,26 @@ class StripeCheckoutController extends Controller
                     ->with('error', 'El pago no fue realizado');
             }
 
+            // 1. Obtener datos del metadata
+            $userId = $session->metadata->user_id;
+            $direccionId = $session->metadata->direccion_id;
+
+            // 2. Obtener carrito y calcular total
+            $carrito = session('carrito', []);
+            $total = collect($carrito)->sum(fn($item) => $item['precio'] * $item['cantidad']);
+
             // Crear pedido en BD
             $pedido = Pedido::create([
-                'cliente_id'        => $session->metadata->user_id,
-                'destinatario'      => $session->metadata->destinatario,
-                'direccion_envio'   => $session->metadata->direccion_envio,
-                'codigo_postal'     => $session->metadata->codigo_postal,
-                'provincia'         => $session->metadata->provincia,
-                'ciudad'            => $session->metadata->ciudad,
-                'telefono_contacto' => $session->metadata->telefono_contacto,
+                'cliente_id'        => $userId,
+                'direccion_id'      => $direccionId,
                 'estado'            => 'pagado',
                 'metodo_pago'       => 'tarjeta',
-                'total_pedido'      => $session->amount_total / 100,
-                'stripe_session_id' => $session->id,
+                'total_pedido'      => $total,
+                'stripe_session_id' => $session->payment_intent,
+                'stripe_payment_id' => $session->payment_status,
             ]);
 
             // Insertar detalles del pedido
-            $carrito = session('carrito', []);
             foreach ($carrito as $item) {
                 DetallePedido::create([
                     'pedido_id'      => $pedido->id,
