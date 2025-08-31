@@ -78,47 +78,4 @@ class CartController extends Controller
         session()->forget('carrito');
         return redirect()->back()->with('success', 'Carrito vaciado.');
     }
-
-    public function realizarPedido(Request $request)
-    {
-        $request->validate([
-            'direccion_envio' => 'required|string|max:255',
-            'metodo_pago' => 'required|in:tarjeta,transferencia,paypal',
-        ]);
-
-        $carrito = session('carrito', []);
-        if (empty($carrito)) {
-            return redirect()->route('catalogo')->with('error', 'Tu carrito está vacío.');
-        }
-
-        $total = 0;
-        foreach ($carrito as $item) {
-            $total += $item['producto']->precio_venta * $item['cantidad'];
-        }
-
-        $pedido = Pedido::create([
-            'cliente_id' => Auth::id(),
-            'direccion_envio' => $request->direccion_envio,
-            'estado' => 'pendiente',
-            'metodo_pago' => $request->metodo_pago,
-            'total_pedido' => $total,
-        ]);
-
-        foreach ($carrito as $item) {
-            DetallePedido::create([
-                'pedido_id' => $pedido->id,
-                'producto_id' => $item['producto']->id,
-                'cantidad' => $item['cantidad'],
-                'precio_unitario' => $item['producto']->precio_venta,
-            ]);
-
-            // Descontar stock
-            $item['producto']->decrement('cantidad', $item['cantidad']);
-        }
-
-        session()->forget('carrito');
-
-        return redirect()->route('cliente.pedidos.index')
-            ->with('success', 'Pedido realizado correctamente. Redirigiendo a su banco...');
-    }
 }

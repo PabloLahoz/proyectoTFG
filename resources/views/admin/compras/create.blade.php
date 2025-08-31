@@ -12,38 +12,53 @@
                     {{-- Lista desplegable de productos --}}
                     <div>
                         <label for="producto_id" class="block text-sm font-medium text-gray-700">Producto</label>
-                        <select name="producto_id" id="producto_id" required
+                        <select name="producto_id" id="producto_id"
                                 class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
                             <option value="">Seleccione un producto</option>
                             @foreach($productos as $producto)
-                                <option value="{{ $producto->id }}">{{ $producto->id }} - {{ $producto->nombre }}</option>
+                                <option value="{{ $producto->id }}" {{ old('producto_id') == $producto->id ? 'selected' : '' }}>
+                                    {{ $producto->id }} - {{ $producto->nombre }}
+                                </option>
                             @endforeach
                         </select>
+                        @error('producto_id')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     {{-- Lista desplegable de proveedores --}}
                     <div>
                         <label for="proveedor_id" class="block text-sm font-medium text-gray-700">Proveedor</label>
-                        <select name="proveedor_id" id="proveedor_id" required
+                        <select name="proveedor_id" id="proveedor_id"
                                 class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
                             <option value="">Seleccione un proveedor</option>
                             @foreach($proveedores as $proveedor)
-                                <option value="{{ $proveedor->id }}">{{ $proveedor->id }}
-                                    - {{ $proveedor->nombre }}</option>
+                                <option value="{{ $proveedor->id }}" {{ old('proveedor_id') == $proveedor->id ? 'selected' : '' }}>
+                                    {{ $proveedor->id }} - {{ $proveedor->nombre }}
+                                </option>
                             @endforeach
                         </select>
+                        @error('proveedor_id')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label for="cantidad" class="block text-sm font-medium text-gray-700">Cantidad del producto</label>
-                        <input type="text" name="cantidad" id="cantidad" required
+                        <input type="text" name="cantidad" id="cantidad" value="{{ old('cantidad') }}"
                                class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
+                        @error('cantidad')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label for="precio_compra" class="block text-sm font-medium text-gray-700">Precio de compra</label>
-                        <input type="text" name="precio_compra" id="precio_compra" required
+                        <input type="text" name="precio_compra" id="precio_compra" value="{{ old('precio_compra') }}"
                                class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
+                        @error('precio_compra')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
@@ -61,5 +76,4 @@
             </form>
         </section>
     </div>
-
 </x-layouts.admin>

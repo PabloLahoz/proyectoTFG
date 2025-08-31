@@ -33,4 +33,9 @@ class Pedido extends Model
     {
         return $this->hasMany(DetallePedido::class);
     }
+
+    public function direccion()
+    {
+        return $this->belongsTo(Direccion::class, 'direccion_id');
+    }
 }

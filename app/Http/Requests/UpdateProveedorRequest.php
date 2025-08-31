@@ -42,4 +42,23 @@ class UpdateProveedorRequest extends FormRequest
 
     }
 
+    public function messages(): array
+    {
+        return [
+            'nombre.required'    => 'El nombre del proveedor es obligatorio.',
+            'nombre.max'         => 'El nombre no puede superar los 255 caracteres.',
+
+            'telefono.max'       => 'El teléfono no puede superar los 20 caracteres.',
+            'telefono.unique'    => 'Este teléfono ya está registrado.',
+
+            'email.required'     => 'Debe indicar un email.',
+            'email.email'        => 'Debe ser un email válido.',
+            'email.unique'       => 'Este email ya está registrado.',
+
+            'direccion.required' => 'Debe indicar una dirección.',
+
+            'notas.max'          => 'Las notas no pueden superar los 500 caracteres.',
+        ];
+    }
+
 }

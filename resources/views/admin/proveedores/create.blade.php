@@ -9,33 +9,48 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label for="nombre" class="block font-medium text-gray-700">Nombre de proveedor</label>
-                        <input type="text" name="nombre" id="nombre" required
+                        <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}"
                                class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
+                        @error('nombre')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label for="telefono" class="block font-medium text-gray-700">Teléfono</label>
-                        <input type="text" name="telefono" id="telefono" required
+                        <input type="text" name="telefono" id="telefono" value="{{ old('telefono') }}"
                                class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
+                        @error('telefono')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label for="email" class="block font-medium text-gray-700">Email</label>
-                        <input type="email" name="email" id="email" required
+                        <input type="email" name="email" id="email" value="{{ old('email') }}"
                                class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
+                        @error('email')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label for="direccion" class="block font-medium text-gray-700">Dirección</label>
-                        <input type="text" name="direccion" id="direccion" required
+                        <input type="text" name="direccion" id="direccion" value="{{ old('direccion') }}"
                                class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
+                        @error('direccion')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
                 <div>
                     <label for="notas" class="block font-medium text-gray-700">Notas</label>
                     <textarea name="notas" id="notas" rows="4"
-                              class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200"></textarea>
+                              class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">{{ old('notas') }}</textarea>
+                    @error('notas')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="pt-6 flex flex-col sm:flex-row justify-end gap-4">
@@ -51,6 +66,4 @@
             </form>
         </section>
     </div>
-
-
 </x-layouts.admin>

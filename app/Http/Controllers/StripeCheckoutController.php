@@ -39,8 +39,9 @@ class StripeCheckoutController extends Controller
                 'estado'            => 'pagado',
                 'metodo_pago'       => 'tarjeta',
                 'total_pedido'      => $total,
-                'stripe_session_id' => $session->payment_intent,
-                'stripe_payment_id' => $session->payment_status,
+                'stripe_session_id' => $session->id,
+                'stripe_payment_id' => $session->payment_intent,
+                'fecha_pedido'      => now(),
             ]);
 
             // Insertar detalles del pedido

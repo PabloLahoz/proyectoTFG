@@ -30,4 +30,25 @@ class StoreProveedorRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'nombre.required'    => 'El nombre del proveedor es obligatorio.',
+            'nombre.max'         => 'El nombre no puede superar los 50 caracteres.',
+
+            'telefono.required'  => 'Debe indicar un teléfono.',
+            'telefono.unique'    => 'Este teléfono ya está registrado.',
+            'telefono.min'       => 'El teléfono debe tener 9 dígitos.',
+            'telefono.max'       => 'El teléfono debe tener 9 dígitos.',
+
+            'email.required'     => 'Debe indicar un email.',
+            'email.email'        => 'Debe ser un email válido.',
+            'email.unique'       => 'Este email ya está registrado.',
+
+            'direccion.required' => 'Debe indicar una dirección.',
+
+            'notas.max'          => 'Las notas no pueden superar los 500 caracteres.',
+        ];
+    }
+
 }

@@ -3,16 +3,6 @@
         <div class="bg-white shadow-xl rounded-2xl p-6">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6">Editar producto</h2>
 
-            @if ($errors->any())
-                <div class="mb-4 bg-red-100 border border-red-200 text-red-700 px-4 py-2 rounded">
-                    <ul class="list-disc pl-5">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             <form action="{{ route('productos.update', $producto) }}" method="POST" class="space-y-4">
                 @csrf
                 @method('PUT')
@@ -21,33 +11,48 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Nombre</label>
                         <input type="text" name="nombre" value="{{ old('nombre', $producto->nombre) }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800">
+                        @error('nombre')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Material</label>
                         <input type="text" name="material" value="{{ old('material', $producto->material) }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800">
+                        @error('material')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Dimensiones</label>
                         <input type="text" name="dimensiones" value="{{ old('dimensiones', $producto->dimensiones) }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800">
+                        @error('dimensiones')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Estado</label>
-                        <select name="estado" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                            <option value="nuevo" {{ old('estado', $producto->estado) === 'nuevo' ? 'selected' : '' }}>Nuevo</option>
-                            <option value="seminuevo" {{ old('estado', $producto->estado) === 'seminuevo' ? 'selected' : '' }}>Seminuevo</option>
+                        <label class="block text-sm font-medium text-gray-700">Condición</label>
+                        <select name="condicion" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800">
+                            <option value="nuevo" {{ old('condicion', $producto->condicion) === 'nuevo' ? 'selected' : '' }}>Nuevo</option>
+                            <option value="seminuevo" {{ old('condicion', $producto->condicion) === 'seminuevo' ? 'selected' : '' }}>Seminuevo</option>
                         </select>
+                        @error('condicion')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Precio de venta (€)</label>
                         <input type="number" step="0.01" name="precio_venta" value="{{ old('precio_venta', $producto->precio_venta) }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800">
+                        @error('precio_venta')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 

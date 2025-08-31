@@ -12,32 +12,47 @@
 
             <div>
                 <label for="nombre" class="block font-medium text-gray-700">Nombre de proveedor</label>
-                <input type="text" name="nombre" id="nombre" required value="{{ old('nombre', $proveedor->nombre) }}"
-                       class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200">
+                <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $proveedor->nombre) }}"
+                       class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 text-gray-800">
+                @error('nombre')
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
                 <label for="telefono" class="block font-medium text-gray-700">Teléfono</label>
-                <input type="text" name="telefono" id="telefono" required value="{{ old('telefono', $proveedor->telefono) }}"
-                       class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200">
+                <input type="text" name="telefono" id="telefono" value="{{ old('telefono', $proveedor->telefono) }}"
+                       class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 text-gray-800">
+                @error('telefono')
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
                 <label for="email" class="block font-medium text-gray-700">Email</label>
-                <input type="email" name="email" id="email" required value="{{ old('email', $proveedor->email) }}"
-                       class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200">
+                <input type="email" name="email" id="email" value="{{ old('email', $proveedor->email) }}"
+                       class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 text-gray-800">
+                @error('email')
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
-                <label for="cp" class="block font-medium text-gray-700">CP</label>
-                <input type="text" name="cp" id="cp" required value="{{ old('cp', $proveedor->direccion) }}"
-                       class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200">
+                <label for="direccion" class="block font-medium text-gray-700">Dirección</label>
+                <input type="text" name="direccion" id="direccion" value="{{ old('direccion', $proveedor->direccion) }}"
+                       class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 text-gray-800">
+                @error('direccion')
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
                 <label for="notas" class="block font-medium text-gray-700">Notas</label>
                 <textarea name="notas" id="notas" rows="4"
-                          class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200">{{ old('notas', $proveedor->notas) }}</textarea>
+                          class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 text-gray-800">{{ old('notas', $proveedor->notas) }}</textarea>
+                @error('notas')
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="flex gap-4 mt-4">

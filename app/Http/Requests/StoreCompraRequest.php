@@ -28,4 +28,23 @@ class StoreCompraRequest extends FormRequest
             'precio_compra' => 'required|numeric|min:0',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'producto_id.required'   => 'Debe seleccionar un producto.',
+            'producto_id.exists'     => 'El producto seleccionado no es válido.',
+
+            'proveedor_id.required'  => 'Debe seleccionar un proveedor.',
+            'proveedor_id.exists'    => 'El proveedor seleccionado no es válido.',
+
+            'cantidad.required'      => 'Debe indicar la cantidad del producto.',
+            'cantidad.integer'       => 'La cantidad debe ser un número entero.',
+            'cantidad.min'           => 'La cantidad debe ser al menos 1.',
+
+            'precio_compra.required' => 'Debe indicar el precio de compra.',
+            'precio_compra.numeric'  => 'El precio de compra debe ser un número.',
+            'precio_compra.min'      => 'El precio de compra no puede ser negativo.',
+        ];
+    }
 }

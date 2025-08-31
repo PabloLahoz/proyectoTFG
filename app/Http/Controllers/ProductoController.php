@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProductoRequest;
 use App\Models\Imagen;
 use App\Models\Producto;
 use App\Models\Proveedor;
+use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
@@ -130,5 +131,4 @@ class ProductoController extends Controller
         return redirect()->route('admin.productos.index')
             ->with('info', 'El producto ya estaba activo.');
     }
-
 }

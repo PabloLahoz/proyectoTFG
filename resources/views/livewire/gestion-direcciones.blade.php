@@ -1,8 +1,7 @@
 <div class="space-y-6">
     {{-- Título diferente según el modo --}}
     @if (!$this->modoCheckout)
-        <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-bold">Mis Direcciones</h2>
+        <div class="flex justify-end items-center">
             <button wire:click="nuevaDireccion" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                 ＋ Nueva Dirección
             </button>
@@ -12,16 +11,31 @@
     @endif
 
     {{-- Mensajes --}}
-    @if (session()->has('message'))
-        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-            {{ session('message') }}
-        </div>
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            });
+        </script>
     @endif
 
-    @if (session()->has('error'))
-        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-            {{ session('error') }}
-        </div>
+    @if(session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: 'Error',
+                    text: "{{ session('error') }}",
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+            });
+        </script>
     @endif
 
     {{-- Formulario Modal --}}
@@ -168,17 +182,6 @@
             <p class="text-blue-800 mb-3">No tienes direcciones guardadas.</p>
             <button wire:click="nuevaDireccion" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                 Crear mi primera dirección
-            </button>
-        </div>
-    @endif
-
-    {{-- Botón para añadir en modo perfil (cuando hay direcciones) --}}
-    @if (!$this->modoCheckout && $direcciones->count() > 0)
-        <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-300 transition-colors">
-            <button wire:click="nuevaDireccion"
-                    class="text-blue-600 hover:text-blue-800 flex items-center justify-center w-full">
-                <span class="text-lg">➕</span>
-                <span class="ml-2">Añadir otra dirección</span>
             </button>
         </div>
     @endif

@@ -31,7 +31,22 @@
                     @forelse($pedidos as $pedido)
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2 text-gray-800 text-center">{{ $pedido->cliente_id }}</td>
-                            <td class="px-4 py-2 text-gray-800 text-center">{{ $pedido->direccion_envio }}</td>
+                            <td class="px-4 py-2 text-gray-800">
+                                @if($pedido->direccion)
+                                    <div class="text-sm">
+                                        <div class="font-medium">{{ $pedido->direccion->destinatario }}</div>
+                                        <div>{{ $pedido->direccion->direccion }}</div>
+                                        <div>{{ $pedido->direccion->codigo_postal }} {{ $pedido->direccion->ciudad }}</div>
+                                        <div>{{ $pedido->direccion->provincia }}</div>
+                                        <div class="text-blue-600">📞 {{ $pedido->direccion->telefono }}</div>
+                                        @if($pedido->direccion->alias)
+                                            <span class="text-xs text-gray-500">({{ $pedido->direccion->alias }})</span>
+                                        @endif
+                                    </div>
+                                @else
+                                    <span class="text-red-500 text-sm">Dirección no disponible</span>
+                                @endif
+                            </td>
                             <td class="px-4 py-2">
                                 @if($pedido->estado == 'entregado')
                                     <span class="px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full flex justify-center">Entregado</span>

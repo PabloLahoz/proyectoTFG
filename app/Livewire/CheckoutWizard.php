@@ -279,12 +279,7 @@ class CheckoutWizard extends Component
                 'customer_email' => Auth::user()->email,
                 'metadata' => [
                     'user_id' => Auth::id(),
-                    'destinatario' => $this->destinatario,
-                    'direccion_envio' => $this->direccion_envio,
-                    'codigo_postal' => $this->codigo_postal,
-                    'provincia' => $this->provincia,
-                    'ciudad' => $this->ciudad,
-                    'telefono_contacto' => $this->telefono_contacto,
+                    'direccion_id' => $this->direccionSeleccionadaId,
                 ],
             ]);
 

@@ -79,7 +79,6 @@ Route::resource('productos', ProductoController::class);
 // Rutas para CLIENTE no autenticado
 Route::post('/carrito/anadir/{producto}', [CartController::class, 'add'])->name('carrito.añadir');
 Route::get('/catalogo/{producto}', [ProductoController::class, 'mostrar'])->name('catalogo.show');
-
 // Rutas para CLIENTE autenticado
 Route::middleware(['auth', 'esCliente'])->group(function () {
     Route::get('/cliente/perfil', [UserController::class, 'show'])->name('cliente.perfil.show');

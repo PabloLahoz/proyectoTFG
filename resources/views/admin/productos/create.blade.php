@@ -10,7 +10,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Nombre</label>
                         <input type="text" name="nombre" value="{{ old('nombre') }}"
-                               class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-gray-800 focus:ring-blue-500 focus:border-blue-500">
                         @error('nombre')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -19,7 +19,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Material</label>
                         <input type="text" name="material" value="{{ old('material') }}"
-                               class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-gray-800 focus:ring-blue-500 focus:border-blue-500">
                         @error('material')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -28,17 +28,17 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Dimensiones</label>
                         <input type="text" name="dimensiones" value="{{ old('dimensiones') }}"
-                               class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-gray-800 focus:ring-blue-500 focus:border-blue-500">
                         @error('dimensiones')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Estado</label>
-                        <select name="estado" class="mt-1 block w-full border-gray-300 shadow-sm text-gray-800 rounded-lg focus:ring focus:ring-blue-200">
-                            <option value="nuevo" {{ old('estado') === 'nuevo' ? 'selected' : '' }}>Nuevo</option>
-                            <option value="seminuevo" {{ old('estado') === 'seminuevo' ? 'selected' : '' }}>Seminuevo</option>
+                        <label class="block text-sm font-medium text-gray-700">Condición</label>
+                        <select name="condicion" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-gray-800 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="nuevo" {{ old('condicion') === 'nuevo' ? 'selected' : '' }}>Nuevo</option>
+                            <option value="seminuevo" {{ old('condicion') === 'seminuevo' ? 'selected' : '' }}>Seminuevo</option>
                         </select>
                         @error('estado')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>

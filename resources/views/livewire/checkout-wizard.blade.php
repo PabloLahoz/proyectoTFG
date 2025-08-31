@@ -22,12 +22,12 @@
     {{-- Step 1: Selección de Dirección --}}
     @if ($step === 1)
         <div class="space-y-6">
-            <h3 class="text-lg font-semibold">1. Selecciona una dirección de envío</h3>
+            <h3 class="text-lg font-semibold text-gray-700">1. Selecciona una dirección de envío</h3>
 
             {{-- Lista de direcciones con radio buttons --}}
             @if ($direcciones->count() > 0)
                 <div class="space-y-4">
-                    <label class="block font-medium mb-2">Tus direcciones guardadas:</label>
+                    <label class="block font-medium mb-2 text-gray-800">Tus direcciones guardadas:</label>
 
                     <div class="grid grid-cols-1 gap-3">
                         @foreach ($direcciones as $direccion)
@@ -109,50 +109,50 @@
             @if ($mostrarFormularioNuevaDireccion)
                 <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                     <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-                        <h4 class="text-lg font-semibold mb-4">
+                        <h4 class="text-lg font-semibold mb-4 text-gray-700">
                             {{ $editandoDireccionId ? 'Editar Dirección' : 'Nueva Dirección' }}
                         </h4>
 
                         <div class="space-y-3">
                             <div>
-                                <label class="block text-sm font-medium mb-1">Alias (opcional)</label>
-                                <input type="text" wire:model="alias" class="w-full border p-2 rounded"
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Alias (opcional)</label>
+                                <input type="text" wire:model="alias" class="w-full border p-2 rounded text-gray-800"
                                        placeholder="Ej: Casa, Trabajo...">
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium mb-1">Destinatario *</label>
-                                <input type="text" wire:model="nuevo_destinatario" class="w-full border p-2 rounded" required>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Destinatario *</label>
+                                <input type="text" wire:model="nuevo_destinatario" class="w-full border p-2 rounded text-gray-800" required>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium mb-1">Dirección *</label>
-                                <input type="text" wire:model="nueva_direccion" class="w-full border p-2 rounded" required>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Dirección *</label>
+                                <input type="text" wire:model="nueva_direccion" class="w-full border p-2 rounded text-gray-800" required>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium mb-1">Código Postal *</label>
-                                <input type="text" wire:model="nuevo_codigo_postal" class="w-full border p-2 rounded" required>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Código Postal *</label>
+                                <input type="text" wire:model="nuevo_codigo_postal" class="w-full border p-2 rounded text-gray-800" required>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium mb-1">Provincia *</label>
-                                <input type="text" wire:model="nueva_provincia" class="w-full border p-2 rounded" required>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Provincia *</label>
+                                <input type="text" wire:model="nueva_provincia" class="w-full border p-2 rounded text-gray-800" required>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium mb-1">Ciudad *</label>
-                                <input type="text" wire:model="nueva_ciudad" class="w-full border p-2 rounded" required>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Ciudad *</label>
+                                <input type="text" wire:model="nueva_ciudad" class="w-full border p-2 rounded text-gray-800" required>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium mb-1">Teléfono *</label>
-                                <input type="text" wire:model="nuevo_telefono" class="w-full border p-2 rounded" required>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Teléfono *</label>
+                                <input type="text" wire:model="nuevo_telefono" class="w-full border p-2 rounded text-gray-800" required>
                             </div>
 
                             <div class="flex items-center">
                                 <input type="checkbox" wire:model="predeterminada" id="predeterminada" class="mr-2">
-                                <label for="predeterminada">Establecer como dirección predeterminada</label>
+                                <label for="predeterminada" class="text-gray-800">Establecer como dirección predeterminada</label>
                             </div>
                         </div>
 
@@ -186,22 +186,35 @@
     {{-- Step 2: Resumen --}}
     @if ($step === 2)
         <div class="space-y-6">
-            <h3 class="text-lg font-semibold">Resumen del pedido</h3>
+            <h3 class="text-lg font-semibold text-gray-700">Resumen del pedido</h3>
 
-            <div class="space-y-2">
-                <p><span class="font-medium">Destinatario:</span> {{ $destinatario }}</p>
-                <p><span class="font-medium">Dirección:</span> {{ $direccion_envio }}, {{ $codigo_postal }} {{ $ciudad }} ({{ $provincia }})</p>
-                <p><span class="font-medium">Teléfono:</span> {{ $telefono_contacto }}</p>
+            {{-- Dirección de envío --}}
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-medium text-gray-800 mb-2">📦 Dirección de envío:</h4>
+                <div class="text-gray-700">
+                    <p class="font-medium">{{ $destinatario }}</p>
+                    <p>{{ $direccion_envio }}</p>
+                    <p>{{ $codigo_postal }} {{ $ciudad }} ({{ $provincia }})</p>
+                    <p>📞 {{ $telefono_contacto }}</p>
+                </div>
             </div>
 
-            <div class="text-right font-bold text-xl">
-                Total a pagar: {{ number_format($total, 2) }} €
-            </div>
-
-            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4">
-                <p class="font-bold">Modo de prueba</p>
-                <p>Serás redirigido a Stripe Checkout para realizar el pago de prueba</p>
-                <p>Usa: <strong>4242 4242 4242 4242</strong> - Fecha futura - CVC 123</p>
+            {{-- Productos del carrito --}}
+            <div class="bg-white border border-gray-200 rounded-lg">
+                <h4 class="font-medium text-gray-800 p-4 border-b">Productos en el carrito:</h4>
+                <div class="divide-y divide-gray-100">
+                    @foreach(session('carrito', []) as $item)
+                        <div class="p-3 flex justify-between items-center">
+                            <div>
+                                <span class="font-medium text-gray-900">{{ $item['nombre'] }}</span>
+                                <span class="text-sm text-gray-600 ml-2">x{{ $item['cantidad'] }}</span>
+                            </div>
+                            <span class="font-medium text-gray-900">
+                    {{ number_format($item['precio'] * $item['cantidad'], 2) }} €
+                </span>
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
             @if($stripeError)
@@ -210,12 +223,13 @@
                 </div>
             @endif
 
+            {{-- Botones de navegación --}}
             <div class="flex justify-between mt-6">
                 <button type="button" wire:click="previousStep" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-                    Atrás
+                    ← Atrás
                 </button>
-                <button type="button" wire:click="nextStep" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    Proceder al pago
+                <button type="button" wire:click="nextStep" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Proceder al pago →
                 </button>
             </div>
         </div>
@@ -226,8 +240,8 @@
         <div class="text-center py-8">
             @if($checkoutUrl)
                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                <h3 class="text-lg font-semibold mb-2">Redirigiendo a Stripe Checkout...</h3>
-                <p class="text-gray-600 mb-4">Estamos preparando tu sesión de pago segura.</p>
+                <h3 class="text-lg font-semibold mb-2 text-gray-800">Redirigiendo a Stripe Checkout...</h3>
+                <p class="text-gray-600 mb-4 text-gray-800">Estamos preparando tu sesión de pago segura.</p>
 
                 {{-- Redirección automática desde Livewire --}}
                 <script>

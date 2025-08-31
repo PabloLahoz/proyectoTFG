@@ -13,6 +13,7 @@ class ClientePedidoController extends Controller
     public function index()
     {
         $pedidos = Pedido::where('cliente_id', Auth::id())
+            ->with('direccion')
             ->orderByDesc('fecha_pedido')
             ->get();
 

@@ -2,7 +2,7 @@
 <div class="relative" x-data="{ open: false }">
     <!-- Icono de usuario -->
     <button @click="open = !open" class="focus:outline-none">
-        <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 -3 24 24">
+        <svg class="w-6 h-6 text-white hover:text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 -3 24 24">
             <path d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
         </svg>
 
