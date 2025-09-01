@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.layout :titulo="'Mi perfil'">
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Mi Perfil</h2>
 
@@ -31,10 +31,12 @@
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Datos</h3>
 
                     <div class="mb-4">
-                        <h4 class="text-md font-medium text-gray-800 mb-2">Nombre y apellidos</h4>
-                        <p class="text-sm text-gray-900">{{ $cliente->name }}</p>
-                        <p class="text-sm text-gray-600 mt-1">Correo electrónico</p>
-                        <a href="mailto:{{ $cliente->email }}" class="text-sm text-blue-600 hover:underline">{{ $cliente->email }}</a>
+                        <h4 class="text-md font-medium text-gray-700 mb-2">Nombre y apellidos</h4>
+                        <p class="text-sm text-gray-800 mb-1">{{ $cliente->name }}</p>
+                        <h4 class="text-md font-medium text-gray-700 mb-2">Empresa</h4>
+                        <p class="text-sm text-gray-800 mb-1">{{ $cliente->empresa }}</p>
+                        <p class="text-md font-medium text-gray-700 mb-2">Correo electrónico</p>
+                        <a href="" class="text-sm text-blue-600 hover:underline">{{ $cliente->email }}</a>
                     </div>
                 </div>
 

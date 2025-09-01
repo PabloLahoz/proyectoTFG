@@ -1,4 +1,4 @@
-<x-layouts.admin>
+<x-layouts.admin :titulo="'Agregar proveedor'">
     <div class="max-w-4xl mx-auto px-4 py-8">
         <section class="bg-white p-6 rounded-2xl shadow-xl">
             <h2 class="text-2xl font-semibold mb-6 text-gray-700">Agregar Nuevo Proveedor</h2>

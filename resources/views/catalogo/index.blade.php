@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.layout :titulo="'Catálogo'">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 class="text-3xl font-bold mb-8 text-gray-800">Catálogo de productos</h1>
 
@@ -9,7 +9,7 @@
                     <figure class="w-full aspect-square overflow-hidden">
                         <a href="{{ route('catalogo.show', $producto) }}">
                             <img
-                                src="{{ asset('storage/' . $producto->imagen->ruta) }}"
+                                src="{{ Storage::disk('s3')->url($producto->imagen->ruta) }}""
                                 alt="{{ $producto->nombre }}"
                                 class="w-full h-full object-cover hover:opacity-80 transition duration-200"
                             />
@@ -24,10 +24,25 @@
                         <form action="{{ route('carrito.añadir', $producto) }}" method="POST" class="mt-2">
                             @csrf
                             <div class="mb-3">
-                                <input type="number" name="cantidad" min="1" value="1" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800" required/>
+                                <input
+                                    type="number"
+                                    name="cantidad"
+                                    min="1"
+                                    max="{{ $producto->cantidad }}"
+                                    value="1"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
+                                    required
+                                    id="cantidad-{{ $producto->id }}"
+                                />
+                                <p class="text-gray-500 text-sm mt-1">
+                                    Máximo: {{ $producto->cantidad }} unidades
+                                </p>
                             </div>
                             <div class="card-actions">
-                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200">
+                                <button
+                                    type="submit"
+                                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200"
+                                >
                                     Añadir a carrito
                                 </button>
                             </div>

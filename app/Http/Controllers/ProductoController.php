@@ -8,6 +8,7 @@ use App\Models\Imagen;
 use App\Models\Producto;
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -94,14 +95,17 @@ class ProductoController extends Controller
     }
 
     public function subir_imagen($request, $id_producto) {
-        $rutaImagen = $request->file('imagen')->store('img', 'public');
-        $nombreImagen = basename($rutaImagen);
+        if ($request->hasFile('imagen')) {
+            // Guarda en el bucket S3 en la carpeta productos/
+            $rutaImagen = $request->file('imagen')->store('productos', 's3');
 
-        $item = new Imagen();
-        $item->producto_id = $id_producto;
-        $item->nombre = $nombreImagen;
-        $item->ruta = $rutaImagen;
-        return $item->save();
+            $item = new Imagen();
+            $item->producto_id = $id_producto;
+            $item->nombre = basename($rutaImagen);
+            $item->ruta = $rutaImagen; // aquí guardamos la ruta tal cual nos da S3
+            return $item->save();
+        }
+        return false;
     }
 
     public function catalogo()

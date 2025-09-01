@@ -42,51 +42,51 @@
     @if ($mostrarFormulario)
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-                <h3 class="text-lg font-semibold mb-4">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">
                     {{ $editandoId ? 'Editar Dirección' : 'Nueva Dirección' }}
                 </h3>
 
                 <form wire:submit.prevent="guardarDireccion">
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium mb-1">Alias (opcional)</label>
-                            <input type="text" wire:model="alias" class="w-full border p-2 rounded"
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Alias (opcional)</label>
+                            <input type="text" wire:model="alias" class="w-full border p-2 rounded text-gray-800"
                                    placeholder="Ej: Casa, Trabajo...">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium mb-1">Destinatario *</label>
-                            <input type="text" wire:model="destinatario" class="w-full border p-2 rounded" required>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Destinatario *</label>
+                            <input type="text" wire:model="destinatario" class="w-full border p-2 rounded text-gray-800" required>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium mb-1">Dirección *</label>
-                            <input type="text" wire:model="direccion" class="w-full border p-2 rounded" required>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Dirección *</label>
+                            <input type="text" wire:model="direccion" class="w-full border p-2 rounded text-gray-800" required>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium mb-1">Código Postal *</label>
-                            <input type="text" wire:model="codigo_postal" class="w-full border p-2 rounded" required>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Código Postal *</label>
+                            <input type="text" wire:model="codigo_postal" class="w-full border p-2 rounded text-gray-800" required>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium mb-1">Provincia *</label>
-                            <input type="text" wire:model="provincia" class="w-full border p-2 rounded" required>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Provincia *</label>
+                            <input type="text" wire:model="provincia" class="w-full border p-2 rounded text-gray-800" required>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium mb-1">Ciudad *</label>
-                            <input type="text" wire:model="ciudad" class="w-full border p-2 rounded" required>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Ciudad *</label>
+                            <input type="text" wire:model="ciudad" class="w-full border p-2 rounded text-gray-800" required>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium mb-1">Teléfono *</label>
-                            <input type="text" wire:model="telefono" class="w-full border p-2 rounded" required>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Teléfono *</label>
+                            <input type="text" wire:model="telefono" class="w-full border p-2 rounded text-gray-800" required>
                         </div>
 
                         <div class="flex items-center">
                             <input type="checkbox" wire:model="predeterminada" id="predeterminada" class="mr-2">
-                            <label for="predeterminada">Establecer como dirección predeterminada</label>
+                            <label for="predeterminada" class="text-gray-800">Establecer como dirección predeterminada</label>
                         </div>
                     </div>
 

@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.layout :titulo="'Pedido {{$pedido->id}}'">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div class="p-4">
@@ -62,11 +62,13 @@
                 <div class="mt-6 flex space-x-4">
                     {{-- Botón de cancelar solo si el pedido está pagado --}}
                     @if ($pedido->estado === 'pagado')
-                        <form action="{{ route('cliente.pedidos.cancelar', $pedido) }}" method="POST">
+                        <form action="{{ route('cliente.pedidos.cancelar', $pedido) }}" method="POST" class="pedido-form">
                             @csrf
                             @method('PUT')
-                            <button type="submit"
-                                    class="px-4 py-2 bg-red-600 text-white rounded-2xl hover:bg-red-700">
+                            <button type="button"
+                                    class="px-4 py-2 bg-red-600 text-white rounded-2xl hover:bg-red-700 pedido-btn"
+                                    data-action="cancelar"
+                                    data-nombre="{{ $pedido->id }}">
                                 Cancelar pedido
                             </button>
                         </form>
@@ -74,11 +76,13 @@
 
                     {{-- Botón de marcar como entregado si aún no lo está --}}
                     @if ($pedido->estado === 'pagado')
-                        <form action="{{ route('cliente.pedidos.entregar', $pedido) }}" method="POST">
+                        <form action="{{ route('cliente.pedidos.entregar', $pedido) }}" method="POST" class="pedido-form">
                             @csrf
                             @method('PUT')
-                            <button type="submit"
-                                    class="px-4 py-2 bg-green-600 text-white rounded-2xl hover:bg-green-700">
+                            <button type="button"
+                                    class="px-4 py-2 bg-green-600 text-white rounded-2xl hover:bg-green-700 pedido-btn"
+                                    data-action="entregar"
+                                    data-nombre="{{ $pedido->id }}">
                                 Marcar como entregado
                             </button>
                         </form>
@@ -96,7 +100,45 @@
 
             </div>
         </div>
-
-
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const botones = document.querySelectorAll('.pedido-btn');
+
+            botones.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const form = this.closest('form');
+                    const action = this.dataset.action;
+                    const idPedido = this.dataset.nombre;
+                    let title, text, icon;
+
+                    if (action === 'cancelar') {
+                        title = '¿Cancelar pedido?';
+                        text = `¿Deseas cancelar el pedido #${idPedido}?`;
+                        icon = 'warning';
+                    } else if (action === 'entregar') {
+                        title = '¿Marcar como entregado?';
+                        text = `¿Deseas marcar el pedido #${idPedido} como entregado?`;
+                        icon = 'success';
+                    }
+
+                    Swal.fire({
+                        title: title,
+                        text: text,
+                        icon: icon,
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
 </x-layouts.layout>

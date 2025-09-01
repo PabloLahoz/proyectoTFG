@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.layout :titulo="'Carrito'">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">Carrito de compras</h1>
 
@@ -10,6 +10,20 @@
                         text: "{{ session('success') }}",
                         icon: 'success',
                         timer: 2000,
+                        showConfirmButton: false
+                    });
+                });
+            </script>
+        @endif
+
+        @if(session('error'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: '¡Error!',
+                        text: "{{ session('error') }}",
+                        icon: 'error',
+                        timer: 3000,
                         showConfirmButton: false
                     });
                 });
@@ -52,12 +66,13 @@
                             @php
                                 $subtotal = $producto['precio'] * $producto['cantidad'];
                                 $total += $subtotal;
+                                $stock = $producto['stock'] ?? 0;
                             @endphp
                             <tr>
                                 <td class="px-4 py-3">
-                                    @if($producto['imagen'])
+                                    @if(isset($producto['imagen']))
                                         <a href="{{ route('catalogo.show', ['producto' => $producto['id']]) }}">
-                                            <img src="{{ asset('storage/' . $producto['imagen']['ruta']) }}"
+                                            <img src="{{ Storage::disk('s3')->url($producto['imagen']['ruta']) }}"
                                                  alt="{{ $producto['nombre'] }}"
                                                  class="w-16 h-16 object-cover rounded"/>
                                         </a>
@@ -73,7 +88,11 @@
                                           class="flex items-center gap-2">
                                         @csrf
                                         @method('PUT')
-                                        <input type="number" name="cantidad" min="1" value="{{$producto['cantidad']}}"
+                                        <input type="number"
+                                               name="cantidad"
+                                               min="1"
+                                               max="{{ $stock }}"
+                                               value="{{$producto['cantidad']}}"
                                                class="px-3 py-2 border border-gray-300 rounded-md w-20 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
                                                required/>
                                         <button type="submit" class="btn btn-sm btn-outline btn-info">Actualizar
@@ -82,15 +101,17 @@
                                 </td>
                                 <td class="px-4 py-3 font-medium text-gray-800">€{{ number_format($subtotal, 2) }}</td>
                                 <td class="px-4 py-3">
-                                    <form action="{{ route('carrito.eliminar', $id) }}" method="POST">
+                                    <form action="{{ route('carrito.eliminar', $id) }}" method="POST" class="eliminar-form">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-outline btn-error"
-                                                onclick="return confirm('¿Eliminar este producto del carrito?')">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline btn-error eliminar-btn"
+                                                data-producto="{{ $producto['nombre'] }}">
                                             Eliminar
                                         </button>
                                     </form>
                                 </td>
+
                             </tr>
                         @endforeach
                         <tr class="bg-gray-50 font-semibold">
@@ -132,6 +153,28 @@
                     });
                 });
             }
+
+            const eliminarBtns = document.querySelectorAll('.eliminar-btn');
+            eliminarBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const form = this.closest('form');
+                    const nombreProducto = this.dataset.producto;
+                    Swal.fire({
+                        title: '¿Eliminar producto?',
+                        text: `¿Deseas eliminar "${nombreProducto}" del carrito?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
         });
     </script>
 </x-layouts.layout>

@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.layout :titulo="'Direcciones'">
     @if(session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function () {

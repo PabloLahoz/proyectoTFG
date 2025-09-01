@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.layout :titulo="'Editar datos'">
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Editar mis datos</h2>
 

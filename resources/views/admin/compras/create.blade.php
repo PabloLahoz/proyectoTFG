@@ -1,4 +1,4 @@
-<x-layouts.admin>
+<x-layouts.admin :titulo="'Realizar compra'">
     <div class="max-w-4xl mx-auto px-4 py-8">
         <section class="bg-white p-6 rounded-xl shadow-md">
             <h2 class="text-2xl font-semibold text-gray-700 mb-6">

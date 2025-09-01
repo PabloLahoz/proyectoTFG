@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.layout :titulo="'Contacto'">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 align-middle">
         <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">Contacto</h1>
 
@@ -7,7 +7,7 @@
         </p>
 
         <div class="card shadow-md p-6 space-y-4">
-            <p class="text-gray-700"><strong>📍 Dirección:</strong> Calle Ejemplo 123, Épila, Zaragoza</p>
+            <p class="text-gray-700"><strong>📍 Dirección:</strong> Avenida Ópel 12, Épila, Zaragoza</p>
             <p class="text-gray-700"><strong>📞 Teléfono:</strong> +34 600 123 456</p>
             <p class="text-gray-700"><strong>✉️ Correo electrónico:</strong> paletsepila@gmail.com</p>
         </div>

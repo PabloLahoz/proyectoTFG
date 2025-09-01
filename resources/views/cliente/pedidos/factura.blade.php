@@ -71,8 +71,8 @@
     <div class="logo">Palets Épila</div>
     <div class="empresa">
         Palets Épila S.L.<br>
-        C/ Ejemplo 123<br>
-        Zaragoza, España<br>
+        Avenida Ópel, 12<br>
+        Épila, España<br>
         CIF: B-12345678
     </div>
 </div>
@@ -83,11 +83,10 @@
 <div class="info">
     <p><strong>Cliente:</strong> {{ $pedido->cliente->name }} {{ $pedido->cliente->apellidos ?? '' }}</p>
     <p><strong>Email:</strong> {{ $pedido->cliente->email }}</p>
-    <p><strong>Dirección de envío:</strong> {{ $pedido->direccion_envio }}, {{ $pedido->codigo_postal }} {{ $pedido->ciudad }} ({{ $pedido->provincia }})</p>
-    <p><strong>Teléfono:</strong> {{ $pedido->telefono_contacto }}</p>
+    <p><strong>Dirección de envío:</strong> {{ $pedido->direccion->destinatario }}, {{ $pedido->direccion->direccion }} {{ $pedido->direccion->codigo_postal }} {{ $pedido->direccion->ciudad }} {{ $pedido->direccion->provincia }}</p>
+    <p><strong>Teléfono:</strong> {{ $pedido->direccion->telefono }}</p>
     <p><strong>Fecha:</strong> {{ $pedido->fecha_pedido->format('d/m/Y') }}</p>
     <p><strong>Método de pago:</strong> {{ ucfirst($pedido->metodo_pago) }}</p>
-    <p><strong>Estado:</strong> {{ ucfirst($pedido->estado) }}</p>
 </div>
 
 <!-- Tabla de productos -->

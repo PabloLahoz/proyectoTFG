@@ -1,9 +1,9 @@
-<x-layouts.layout>
+<x-layouts.layout :titulo="'{{ $producto->nombre }}'">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="card lg:card-side bg-base-100 shadow-lg bg-gray-50">
             <figure class="lg:w-1/2 p-4">
                 <img
-                    src="{{ asset('storage/' . $producto->imagen->ruta) }}"
+                    src="{{ Storage::disk('s3')->url($producto->imagen->ruta) }}"
                     alt="{{ $producto->nombre }}"
                     class="rounded-lg w-full aspect-square object-cover"
                 />

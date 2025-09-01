@@ -1,4 +1,4 @@
-<x-layouts.admin>
+<x-layouts.admin :titulo="'Listado proveedores'">
     @if(session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function () {

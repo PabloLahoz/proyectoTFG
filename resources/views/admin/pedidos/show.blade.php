@@ -1,4 +1,4 @@
-<x-layouts.admin>
+<x-layouts.admin :titulo="'Pedido {{$pedido->id}}'">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="bg-white shadow-xl rounded-2xl p-6">
             <a href="{{ route('admin.pedidos.index') }}" class="mt-4 inline-block text-blue-600 hover:underline">← Volver al listado</a>

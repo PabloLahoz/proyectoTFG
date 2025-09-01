@@ -1,4 +1,4 @@
-<x-layouts.admin>
+<x-layouts.admin :titulo="'Listado productos'">
 
     @if(session('success'))
         <script>
@@ -73,7 +73,7 @@
                             <td class="px-4 py-2 text-center">{{ $producto->cantidad }}</td>
                             <td class="px-4 py-2">
                                 @if($producto->imagen)
-                                    <img src="{{ asset('storage/' . $producto->imagen->ruta) }}" alt="" width="60" height="60">
+                                    <img src="{{ Storage::disk('s3')->url($producto->imagen->ruta) }}" alt="{{$producto->nombre}}" width="60" height="60">
                                 @else
                                     <span class="text-gray-400 italic">Sin imagen</span>
                                 @endif

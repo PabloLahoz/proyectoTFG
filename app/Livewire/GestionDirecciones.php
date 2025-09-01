@@ -30,7 +30,7 @@ class GestionDirecciones extends Component
         'codigo_postal' => 'required|string|max:10',
         'provincia' => 'required|string|max:50',
         'ciudad' => 'required|string|max:50',
-        'telefono' => 'required|string|max:20',
+        'telefono' => 'required|string|min:9|max:9',
         'predeterminada' => 'boolean'
     ];
 

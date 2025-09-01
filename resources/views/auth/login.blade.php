@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.layout :titulo="'Iniciar sesión'">
     <section class=" h-full flex items-center justify-center bg-gray-50 overflow-hidden">
         <form method="POST" action="{{ route('login') }}" class="w-full max-w-md bg-white p-8 rounded-lg shadow">
             @csrf

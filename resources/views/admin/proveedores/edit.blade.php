@@ -1,4 +1,4 @@
-<x-layouts.admin>
+<x-layouts.admin :titulo="'Editar proveedor'">
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-800">Editar proveedor</h1>
     </div>
