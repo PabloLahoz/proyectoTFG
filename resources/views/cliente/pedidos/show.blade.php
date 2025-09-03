@@ -62,14 +62,13 @@
                 <div class="mt-6 flex space-x-4">
                     {{-- Botón de cancelar solo si el pedido está pagado --}}
                     @if ($pedido->estado === 'pagado')
-                        <form action="{{ route('cliente.pedidos.cancelar', $pedido) }}" method="POST" class="pedido-form">
+                        <form action="{{ route('cliente.desactivar', $cliente->id) }}" method="POST" class="desactivar-form">
                             @csrf
-                            @method('PUT')
+                            @method('DELETE')
                             <button type="button"
-                                    class="px-4 py-2 bg-red-600 text-white rounded-2xl hover:bg-red-700 pedido-btn"
-                                    data-action="cancelar"
-                                    data-nombre="{{ $pedido->id }}">
-                                Cancelar pedido
+                                    class="px-4 py-2 bg-red-600 text-white rounded-2xl hover:bg-red-700 desactivar-btn"
+                                    data-nombre="{{ $cliente->nombre }}">
+                                Desactivar cuenta
                             </button>
                         </form>
                     @endif
@@ -104,7 +103,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const botones = document.querySelectorAll('.pedido-btn');
-
+            const btn = document.querySelector('.desactivar-btn');
             botones.forEach(btn => {
                 btn.addEventListener('click', function () {
                     const form = this.closest('form');
@@ -138,6 +137,28 @@
                     });
                 });
             });
+
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    const form = this.closest('form');
+                    const nombreCliente = this.dataset.nombre;
+
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: `La cuenta de ${nombreCliente} será desactivada.`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, desactivar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            }
         });
     </script>
 
